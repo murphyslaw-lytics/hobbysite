@@ -6,7 +6,7 @@ About Contentstack: Contentstack is a headless CMS with an API-first approach th
 
 About this project: This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) used to build modern web applications. 
 
-![compass-starter-app](/static/starter-app.png)
+![compass-starter-app](/public/starter-app.png)
 
 ##### Recommended Node version: v18.17.0 and App Supported till v20.9.0
 
