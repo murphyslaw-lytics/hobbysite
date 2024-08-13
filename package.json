@@ -44,6 +44,17 @@
     "tailwindcss": "3.3.1",
     "typescript": "5.0.4"
   },
+  "overrides": {
+    "eslint-config-next": {
+      "eslint": "$eslint"
+    },
+    "@typescript-eslint/eslint-plugin": {
+      "eslint": "$eslint"
+    },
+    "@typescript-eslint/parser": {
+      "eslint": "$eslint"
+    }
+  },
   "devDependencies": {
     "@eslint/eslintrc": "^3.1.0",
     "@eslint/js": "^9.9.0",
