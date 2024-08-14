@@ -20,7 +20,7 @@ ContentstackLivePreview.init({
     stackDetails: {
         apiKey: process.env.CONTENTSTACK_API_KEY,
         environment: process.env.CONTENTSTACK_ENVIRONMENT,
-        branch: process.env.CONTENTSTACK_BRANCH,
+        branch: process.env.CONTENTSTACK_BRANCH
     },
     stackSdk: Stack,
     ssr: false
