@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import { FallbackProps } from 'react-error-boundary'
 
-import { Asset, Entry } from './common'
+import { Asset } from './common'
 
 
 export interface serverSideProps  {

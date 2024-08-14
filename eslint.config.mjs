@@ -23,7 +23,7 @@ const patchedConfig = fixupConfigRules([...compat.extends(
 
 const config = [
     {
-        ignores: ['src/utils/tracking.js']
+        ignores: ['.next/*']
     }, 
     ...patchedConfig,
     {

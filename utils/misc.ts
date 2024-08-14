@@ -1,5 +1,6 @@
-import { isEditButtonsEnabled } from '@/config'
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as _ from 'lodash'
+import { isEditButtonsEnabled } from '@/config'
 
 export const prefixReferenceIncludes = (mbId: string, ...references: string[]) => {
     const result = references.map(e => mbId + '.' + e)

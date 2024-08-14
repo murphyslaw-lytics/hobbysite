@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { Taxonomy } from '@/types/pages'
 import { getEntries, getEntryByUrl } from '@/services'
 import { imageCardsReferenceIncludes, teaserReferenceIncludes, textAndImageReferenceIncludes, textJSONRtePaths } from './loaders.helper'
