@@ -1,4 +1,4 @@
-[![Contentstack](/static/contentstack-readme-logo.png)](https://www.contentstack.com/)
+[![compass-starter-app](/public/contentstack-logo.png)](https://www.contentstack.com/)
 
 # Compass Starter App
 
