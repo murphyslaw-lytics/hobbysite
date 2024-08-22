@@ -27,10 +27,6 @@ You can start editing the page by modifying `app/[locale]/page.tsx`. The page au
 ## Compass Starter Stack Content Repo
 [Compass Starter Stack Content Repo](https://github.com/contentstack/compass-starter-stack)
 
-## Live Demo
-
-You can check the [live demo](https://compass-starter.contentstackapps.com/en/) to get first-hand experience of the website.
-
 ## Tutorial
 
 We have created an in-depth tutorial on how you can create a starter website using the Contentstack's Node.js SDK and fetch its content using Contentstack.
