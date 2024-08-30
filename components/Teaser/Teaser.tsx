@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import { Teaser as TeaserProps } from '@/types/components'
 import { Link } from '@/components'
-import { resolveCta } from '@/utils'
+import { isDataInLiveEdit, resolveCta } from '@/utils'
 import { Image } from '../common/Image'
 
 const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
@@ -55,13 +55,13 @@ const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
         <div
             id={id}
             className={'teaser-container relative bg-cover bg-no-repeat'}
-            {...$?.heading}
         >
             <div className='absolute inset-0 overflow-hidden'>
                 {image?.[0]?.image?.url
                     // eslint-disable-next-line jsx-a11y/alt-text
                     && <Image
                         {...image[0]}
+                        addDataCslp={isDataInLiveEdit()}
                         className='h-full w-full object-cover object-center opacity-100'
                     />
                 }

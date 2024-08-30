@@ -1,40 +1,29 @@
-[![compass-starter-app](/public/contentstack-logo.png)](https://www.contentstack.com/)
+# Universal Demo aka Compass Starter App
 
-# Compass Starter App
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-About Contentstack: Contentstack is a headless CMS with an API-first approach that puts content at the centre. It is designed to simplify the process of publication by separating code from content.
 
-About this project: This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) used to build modern web applications. 
-
-![compass-starter-app](/public/starter-app.png)
-
-##### Recommended Node version: v18.17.0 and App Supported till v20.9.0
+#####Recommended Node version: v18.17.0 and App Supported till v20.9.0
 
 ## Getting Started
 
-Refer [.env.sample](.env.sample) to set up env file
+Refer .env.sample to set up env file
 
 First, run the development server:
 
 ```bash
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/[locale]/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Compass Starter Stack Content Repo
-[Compass Starter Stack Content Repo](https://github.com/contentstack/compass-starter-stack)
+## Compass Starter Stack Content Stored for 1CT
+[Compass Starter Stack Content Repo](https://github.com/Contentstack-Solutions/universal-demo-stack)
 
-## Tutorial
-
-We have created an in-depth tutorial on how you can create a starter website using the Contentstack's Node.js SDK and fetch its content using Contentstack.
-
-[Build a Compass Starter Website with NextJS and Contentstack](https://www.contentstack.com/docs/developers/sample-apps/)
-
-## Documentation
-
-- [Contentstack documentation](https://www.contentstack.com/docs/)
-- [Region support documentation](https://www.contentstack.com/docs/developers/selecting-region-in-contentstack-starter-apps)
-- [Next.js](https://learnnextjs.com/)
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

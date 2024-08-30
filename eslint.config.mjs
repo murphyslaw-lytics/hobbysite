@@ -3,8 +3,9 @@ import tsParser from '@typescript-eslint/parser'
 import js from '@eslint/js'
 import { FlatCompat } from '@eslint/eslintrc'
 import { fixupConfigRules } from '@eslint/compat'
-import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import path from 'node:path'
+
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -23,7 +24,9 @@ const patchedConfig = fixupConfigRules([...compat.extends(
 
 const config = [
     {
-        ignores: ['.next/*']
+        ignores: [
+            '.next/*'
+        ]
     }, 
     ...patchedConfig,
     {
@@ -67,6 +70,7 @@ const config = [
             }],
 
             '@typescript-eslint/no-explicit-any': 'off',
+            '@typescript-eslint/no-unused-expressions': 'off',
             'comma-dangle': ['error', 'never'],
 
             'max-len': ['error', {
@@ -130,6 +134,7 @@ const config = [
                 extensions: ['.js', '.tsx', '.ts']
             }]
         }
-    }]
+    }
+]
 
 export default config

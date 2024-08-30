@@ -163,7 +163,7 @@ function Header (props: App.Header) {
                                                         </p>}
                                                         <Link
                                                             url={linkData?.link?.[0]?.url}
-                                                            className='flex flex-col'
+                                                            className='flex flex-col outline-none'
                                                         >
                                                             {linkData?.thumbnail?.url && <img
                                                                 src={linkData.thumbnail.url.indexOf('?') > -1 ? `${linkData.thumbnail.url}&auto=webp&format=pjpg` : `${linkData.thumbnail.url}?auto=webp&format=pjpg`} className='object-cover h-40'
