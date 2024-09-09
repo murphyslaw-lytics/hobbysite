@@ -1,13 +1,12 @@
 import { ImageComponent } from '@/types/components'
 
 const Image: React.FC<ImageComponent> = (props: ImageComponent) => {
-    const { image, image_alt_text, className, is_thumbnail } = props
+    const { image, image_alt_text, className, is_thumbnail, addDataCslp=true } = props
 
     const queryParam = (is_thumbnail && is_thumbnail !== undefined ) ?  'auto=webp&format=pjpg&width=50p' : 'auto=webp&format=pjpg'
 
     return <>
         {image?.url && <picture
-            {...image?.$?.title}
         >
             <source media='(max-width: 475px)' srcSet={image?.url.indexOf('?') > -1 ? `${image.url}&${queryParam}` : `${image.url}?${queryParam}`} />
             <source media='(min-width: 476px) and (max-width: 640px)' srcSet={image?.url.indexOf('?') > -1 ? `${image.url}&${queryParam}` : `${image.url}?${queryParam}`} /> {/* xs */}
@@ -21,6 +20,7 @@ const Image: React.FC<ImageComponent> = (props: ImageComponent) => {
                 alt={(image_alt_text !== undefined && image_alt_text !== '') ? image_alt_text : image?.title}
                 className={className}
                 data-id='image-component'
+                {...(addDataCslp && image?.$?.url)}
             />
         </picture>}
     </>

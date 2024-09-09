@@ -57,6 +57,7 @@ export interface Image {
 }
 export interface ImageComponent extends Image {
   className?: string;
+  addDataCslp?: boolean;
 }
 
 export interface Text {

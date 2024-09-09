@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-const colors = require('tailwindcss/colors')
-const defaultTheme = require('tailwindcss/defaultTheme')
+/* eslint-disable @typescript-eslint/no-require-imports */
+import colors from 'tailwindcss/colors'
+import defaultTheme from 'tailwindcss/defaultTheme'
 const config = {
     content: [
         './pages/**/*.{js,ts,jsx,tsx,mdx}',

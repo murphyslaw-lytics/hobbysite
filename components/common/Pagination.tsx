@@ -94,11 +94,10 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
 
             box = myDiv && myDiv.getBoundingClientRect()
 
-            // eslint-disable-next-line  @typescript-eslint/no-non-null-assertion
             window?.scrollBy(0, box!.y - 85)
 
         } catch (e) {
-
+            console.error('🚀 ~ handleScroll ~ e:', e)
             return
 
         }
@@ -134,7 +133,7 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
                     id='pagination-prev-btn'
                 >
                     <ArrowLongLeftIcon className='mr-3 h-5 w-5 text-gray-400' aria-hidden='true' />
-                    Previous
+                    <span className='hidden sm:block'>Previous</span>
                 </a>
             </div>
             <div className='md:-mt-px md:flex'>
@@ -151,7 +150,7 @@ const Pagination: React.FC<pagination> = ({ length, dataPerPage, currentPage, se
                     onClick={() => handlePageClick(currentPage + 1)}
                     id='pagination-next-btn'
                 >
-                    Next
+                    <span className='hidden sm:block'>Next</span>
                     <ArrowLongRightIcon className='ml-3 h-5 w-5 text-gray-400' aria-hidden='true' />
                 </a>
             </div>

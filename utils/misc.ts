@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-import * as _ from 'lodash'
 import { isEditButtonsEnabled } from '@/config'
 
 export const prefixReferenceIncludes = (mbId: string, ...references: string[]) => {
@@ -11,6 +9,7 @@ export const inIframe = () => {
     try {
         return window.self !== window.top
     } catch (e) {
+        console.error('🚀 ~ inIframe ~ e:', e)
         return true
     }
 }

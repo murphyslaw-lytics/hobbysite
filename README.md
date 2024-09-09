@@ -4,15 +4,15 @@
 
 About Contentstack: Contentstack is a headless CMS with an API-first approach that puts content at the centre. It is designed to simplify the process of publication by separating code from content.
 
-About this project: This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) used to build modern web applications. 
+About this project: This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) used to build modern web applications.
 
 ![compass-starter-app](/public/starter-app.png)
 
-##### Recommended Node version: v18.17.0 and App Supported till v20.9.0
+##### Recommended Node version: v18.17.0 and App Supported till v22.6.0
 
 ## Getting Started
 
-Refer [.env.sample](.env.sample) to set up env file
+Refer [.env.sample](.env.sample) to set up your .env.local file in root directory
 
 First, run the development server:
 
@@ -25,6 +25,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/[locale]/page.tsx`. The page auto-updates as you edit the file.
 
 ## Compass Starter Stack Content Repo
+
 [Compass Starter Stack Content Repo](https://github.com/contentstack/compass-starter-stack)
 
 ## Tutorial

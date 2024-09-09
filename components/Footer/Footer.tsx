@@ -16,9 +16,6 @@ export const Footer: React.FC<App.Footer> = ({ sections, copyright_info, built_b
     // ? Method to render the Region Links column
     const renderFooterLinks = () => {
         const chunkedArray = []
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        /* eslint-disable  @typescript-eslint/no-non-null-assertion */
         for (let i = 0; i < sections!.length; i += 2) {
             const chunk = sections?.slice(i, i + 2)
             chunkedArray.push(chunk)

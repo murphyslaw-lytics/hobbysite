@@ -1,7 +1,7 @@
 'use client'
 
 import _, { isString } from 'lodash'
-import { Cta, InternalLink } from '../types/components'
+import { Cta, InternalLink } from '@/types/components'
 
 export const resolveCardCta = (cta?: string | Cta) => {
     if(!cta) return
