@@ -79,8 +79,8 @@ export default function ArticleListing () {
             {data?.title && <div className='pt-16 px-8 mb-16 bg-background-primary dark:bg-white text-center max-w-7xl mx-auto'>
                 <h1 data-id='h1' className='mx-auto text-black' {...data?.$?.title}>{data?.title}</h1>
             </div>}
-            {data?.components && Object.keys(data.components)?.length ? (
-                <RenderComponents
+            {data?.components ? (
+                <RenderComponents $={data?.$}
                     components={data?.components}
                 />
             ) : <></>}

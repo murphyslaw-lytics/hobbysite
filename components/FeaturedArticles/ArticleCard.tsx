@@ -4,13 +4,12 @@ import { ArticleCardItem } from '@/types/components'
 import { classNames, resolveCardCta } from '@/utils'
 
 const ArticleCard: React.FC<ArticleCardItem> = (props: ArticleCardItem) => {
-    const { cover_image, image_alt_text, title, url, summary, count, key, id } = props
-
-    cover_image && delete cover_image.$
+    const { cover_image, image_alt_text, title, url, summary, count, key, id, $} = props
 
     {/* eslint-disable-next-line jsx-a11y/alt-text */ }
-    const cardImage = cover_image ? <Image
+    const cardImage = <Image
         image={cover_image}
+        $={$}
         image_alt_text={image_alt_text}
         className={classNames(
             count === 1 ? 'h-auto w-auto'
@@ -20,7 +19,7 @@ const ArticleCard: React.FC<ArticleCardItem> = (props: ArticleCardItem) => {
                             : '',
             'w-full object-center object-fit object-cover hover:opacity-90 hover:cursor-pointer'
         )}
-    /> : <></>
+    />
 
     return (
         <Link
@@ -44,7 +43,8 @@ const ArticleCard: React.FC<ArticleCardItem> = (props: ArticleCardItem) => {
                         {title
                             && <h4
                                 data-id='h4-text'
-                                className='font-bold card-title'>
+                                className='font-bold card-title'
+                                {...$?.title}>
                                 {title}
                             </h4>
                         }
@@ -52,6 +52,7 @@ const ArticleCard: React.FC<ArticleCardItem> = (props: ArticleCardItem) => {
                     {summary && <p
                         data-id='paragraph-text'
                         className='mt-4 p-0 text-base leading-5 text-black dark:text-white card-content'
+                        {...$?.summary}
                     >
                         {summary}
                     </p>

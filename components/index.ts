@@ -1,5 +1,5 @@
 export * from './Card'
-export * from './common/Image'
+export * from './common'
 export * from './Teaser'
 export * from './CardCollection'
 export * from './ImageAndText'

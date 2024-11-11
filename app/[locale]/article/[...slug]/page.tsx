@@ -115,7 +115,7 @@ export default function Article () {
                     relatedLinksLabel={related_links}
                     $={data?.$}
                 />}
-                {show_related_articles && <RelatedArticles
+                {show_related_articles && relatedArticles && relatedArticles.length > 0 && <RelatedArticles
                     related_articles={related_articles}
                     cards={relatedArticles}
                 />}

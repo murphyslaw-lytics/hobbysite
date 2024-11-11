@@ -11,7 +11,7 @@ const Text: FunctionComponent<TextType> = (props: TextType) => {
             ? <div 
                 id={id?.toString()} 
                 className={`my-16 px-8 ${styles?.background_color === 'secondary' ? 'bg-background-secondary' : 'bg-background-primary'} dark:bg-transparent`}> 
-                <div className='text max-w-7xl mx-auto' {...$?.content}>{parse(content)}</div>
+                <div className='text max-w-7xl mx-auto whitespace-break-spaces' {...$?.content}>{parse(content)}</div>
             </div> 
             : <></>
     )

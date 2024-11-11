@@ -1,6 +1,6 @@
 import type { AppProps } from 'next/app'
 import { Asset, EmbedEntry, Entry, localeItems, MappedPreview } from './common'
-import { CallToAction, InternalLink } from './components'
+import { CallToAction, ExternalLink, HeaderSection, InternalLink, SectionLink } from './components'
 
 export interface Header extends Entry {
   $?: MappedPreview<Header>;
@@ -17,20 +17,11 @@ export interface LangaugeSelector {
 }
 
 export interface items {
+  $?: MappedPreview<items>;
   text?:string
   link?:InternalLink[]
   mega_menu?:{
-    sections?:{
-      title?:string
-      link:InternalLink[]
-      links: {
-        thumbnail?: Asset;
-        $?: { text?: {'data-cslp': string} };
-        text?:string
-        link:InternalLink[],
-        link_text?:string
-      }[]
-    }[];
+    sections?:HeaderSection[];
     cta_group?: {
       call_to_action?:CallToAction[]
     }[];
@@ -44,12 +35,7 @@ export interface Navigation extends Entry {
       sections?:{
         title?:string
         link:InternalLink[]
-        links: {
-          thumbnail?: Asset;
-          $?: { text?: {'data-cslp': string} };
-          text?:string
-          link:InternalLink[]
-        }[]
+        links: SectionLink[]
       }[];
       cta_group?: {
         call_to_action?:CallToAction[]
@@ -75,10 +61,8 @@ export interface FooterLink {
   title?: string;
   text?: string
   link: InternalLink[]
-  external_link?: {
-    title?: string
-    href?:string
-  }
+  external_link?: ExternalLink
+  [key: string]: MappedPreview<FooterLink> | InternalLink[] | ExternalLink | string | undefined;
 }
  
 export type SingleColLayout = {

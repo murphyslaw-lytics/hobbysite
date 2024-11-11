@@ -6,6 +6,7 @@ import parse from 'html-react-parser'
 import { App } from '@/types'
 import { Link } from '@/components'
 import { FooterLink, FooterSection } from '@/types/app'
+import { MappedPreview } from '@/types/common'
 
 export const isFooterValid = (footer:App.Footer) => {
     return footer && Object.keys(footer)?.length > 0
@@ -25,12 +26,12 @@ export const Footer: React.FC<App.Footer> = (props: App.Footer) => {
         }
        
 
-        const renderLinks = (links: FooterLink[]) => {
+        const renderLinks = (links: FooterLink[], links_$: MappedPreview<FooterLink | undefined>) => {
             return links?.map((link: FooterLink, index: number) => {
                 return (
                     <li
                         key={`link-${index}`}
-                        {...link?.$?.text}
+                        {...links_$?.[`links__${index}`]}
                     >
                         {
                             link?.link?.[0]?.url
@@ -41,7 +42,7 @@ export const Footer: React.FC<App.Footer> = (props: App.Footer) => {
                                         target={link?.external_link?.href && link?.external_link?.href?.charAt(0) !== '/' ? '_blank' : '_self'}
                                         {...link?.$?.link || link?.$?.external_link}
                                     >
-                                        {link?.text}
+                                        <span {...(link?.link.length !== 0 ? link?.$?.link : link?.$?.text)}>{link?.text}</span>
                                     </Link>
                                 )
                                 : (
@@ -51,7 +52,7 @@ export const Footer: React.FC<App.Footer> = (props: App.Footer) => {
                                         target={link?.external_link?.href?.charAt(0) !== '/' ? '_blank' : '_self'}
                                         {...link?.$?.external_link}
                                     >
-                                        {link?.text || link?.external_link?.title}
+                                        <span {...(link?.link.length !== 0 ? link?.$?.link : link?.$?.text)}>{link?.text || link?.external_link?.title}</span>
                                     </Link>
                                 )
                         }
@@ -75,9 +76,9 @@ export const Footer: React.FC<App.Footer> = (props: App.Footer) => {
                         >
                             {link.title}
                         </h3>
-                        <ul role='list' className='mt-6 space-y-4'>
+                        <ul role='list' className='mt-6 space-y-4' {...link?.$?.links}>
                             {
-                                renderLinks(link?.links)
+                                renderLinks(link?.links, link?.$)
                             }
                         </ul>
                     </div>
@@ -132,11 +133,11 @@ export const Footer: React.FC<App.Footer> = (props: App.Footer) => {
             </div>
             }
             <div className='mx-auto max-w-7xl border-t border-gray-900/10 w-full px-6 pt-4 pb-8 md:pt-4 md:pb-4 flex flex-col gap-2 md:flex-row items-center justify-between '>
-                {copyright_info && <span className='text-gray-700 font-montserrat' {...$?.copyright_info} >
+                {copyright_info && <span className='text-gray-700 font-montserrat whitespace-break-spaces' {...$?.copyright_info} >
                     {parse(copyright_info)}
                 </span>}
 
-                {built_by && built_by.length != 0 && built_by != '<p></p>' && <div className='py-1 px-3 rounded-full border-[1px] border-gray-700 text-center built-by' {...$?.built_by}>
+                {built_by && built_by.length != 0 && built_by != '<p></p>' && <div className='py-1 px-3 rounded-full border-[1px] border-gray-700 text-center built-by whitespace-break-spaces' {...$?.built_by}>
                     {parse(built_by)}
                 </div>}
             </div>

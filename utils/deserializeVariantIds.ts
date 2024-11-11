@@ -1,5 +1,10 @@
 import Personalize from '@contentstack/personalize-edge-sdk'
 
 export function deserializeVariantIds () : string {
-    return Personalize.getVariantAliases().join(',')
+    try {
+        return Personalize.getVariantAliases().join(',')
+    } catch (err) {
+        console.error('Error while deserializing variant ids : ', err)
+        return ''
+    }
 }

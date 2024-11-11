@@ -21,16 +21,16 @@ const useRouterHook = () => {
     }
 
     const getUnlocalizedPath = () => {
-        const isHomePage = Pathname?.length === 3 || (Pathname?.length === 6 && Pathname.indexOf('-') === 3)
-        const isLocaleInPath = localesCodeArray?.includes(getLocale())
-
-        if (isHomePage && isLocaleInPath) {
+        const pathArray = Pathname.split('/')
+        // home page path
+        if ( pathArray?.length === 2 && pathArray?.[0] === '' && localesCodeArray?.includes(pathArray?.[1]) ) {
             return '/'
-        } else if (Pathname?.length && localesCodeArray?.length > 0) {
+        }
+        //  other pages
+        if (Pathname?.length && localesCodeArray?.length > 0) {
             return Pathname.split('/').filter(slug => !localesCodeArray?.includes(slug)).join('/')
         } else {
-            const startIndex = Pathname?.indexOf('-') === 3 ? 6 : 3
-            return Pathname?.length > startIndex ? Pathname.substring(startIndex) : '/'
+            return pathArray?.length > 2 ? '/' + pathArray.slice(2).join('/') : '/'
         }
     }
 

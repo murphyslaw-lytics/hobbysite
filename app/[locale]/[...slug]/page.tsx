@@ -51,8 +51,8 @@ export default function LandingPage () {
     return (<>
         {data
             ? <PageWrapper {...data} contentType='landing_page'>
-                {data?.components && Object.keys(data.components)?.length
-                    ? <RenderComponents
+                {data?.components
+                    ? <RenderComponents $={data?.$}
                         components={data?.components}
                         isABEnabled={abEnabled}
                     /> : ''}

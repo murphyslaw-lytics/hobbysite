@@ -12,10 +12,11 @@ const ArticleCover:React.FC<ArticleCoverType> = (props:ArticleCoverType) => {
             {title && <h1 data-id='h1-text' {...$?.title}>{title}</h1>}
             <div className={'relative overflow-hidden mt-6'}>
                 {/* eslint-disable-next-line jsx-a11y/alt-text */}
-                {cover_image?.url && <Image
+                <Image
                     image={cover_image}
+                    $={$}
                     className={'w-full max-auto object-cover aspect-[2] md:aspect-[5/2] object-center bg-white/5 shadow-2xl ring-1 ring-white/10 dark:text-white'}
-                />}
+                />
             </div>
             {summary && <p data-id='paragraph-text' className='mt-2 !text-lg leading-5 text-black/60 dark:text-white' {...$?.summary}>
                 {summary}

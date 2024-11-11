@@ -12,6 +12,7 @@ const Video: React.FC<VideoComponent> = (props: VideoComponent) => {
                 className={className}
                 data-id='video-component'
                 muted autoPlay loop
+                {...(addDataCslp && video?.$?.url)}
             />
         )}
     </>
