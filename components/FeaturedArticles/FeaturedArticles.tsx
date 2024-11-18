@@ -1,4 +1,4 @@
-import { FeaturedArticles as FeaturedArticlesProps } from '@/types/components'
+import { ArticleCardItem, FeaturedArticles as FeaturedArticlesProps } from '@/types/components'
 import { FeaturedArticlesHeader } from './FeaturedArticlesHeader'
 import { FeaturedArticlesBody } from './FeaturedArticlesBody'
 
@@ -22,7 +22,7 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = (props: FeaturedArticl
 
                 <FeaturedArticlesBody
                     id={id}
-                    cards={articles}
+                    cards={articles as ArticleCardItem[]}
                     totalCount={articles ? articles?.length : 0}
                     $={$}
                 />

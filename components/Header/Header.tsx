@@ -22,14 +22,14 @@ function Header (props: App.Header) {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [data, setData] = useState(props)
     const { logo, items } = props
-    
+
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
     const [Opac, setOpac] = useState<boolean>(true)
     const [currPanel, setCurrPanel] = useState('')
     const [, setOpen] = useState(false)
     const [locales, setLocales] = useState<Locale[] | []>([])
-    const {path} = useRouterHook()
-    const isHome:boolean = (path === '/' || path === process.env.CONTENTSTACK_AB_LANDING_PAGE_PATH) ? true : false 
+    const { path } = useRouterHook()
+    const isHome: boolean = (path === '/' || path === process.env.CONTENTSTACK_AB_LANDING_PAGE_PATH) ? true : false
 
     const { personalizationSDK, personalizeConfig } = usePersonalization()
 
@@ -43,7 +43,7 @@ function Header (props: App.Header) {
     }, [props])
 
     const listenScrollEvent = () => {
-        if(window?.scrollY > 0)
+        if (window?.scrollY > 0)
             setOpac(false)
         else
             setOpac(true)
@@ -51,7 +51,7 @@ function Header (props: App.Header) {
 
     useEffect(() => {
         const top = document.querySelector('.teaser-container')?.getBoundingClientRect()?.top
-        if( top && top < 100) {
+        if (top && top < 100) {
             setOpac(true)
         }
 
@@ -83,18 +83,18 @@ function Header (props: App.Header) {
         setOpen(false)
     }
 
-    const setAttribute = async (region: string, mobile=false) => {
+    const setAttribute = async (region: string, mobile = false) => {
         const criteria = region.toLowerCase()
         const attributes = getPersonalizeAttribute(audiences, criteria)
-        await personalizationSDK.set({...attributes})
+        await personalizationSDK.set({ ...attributes })
 
-        if(mobile) resetMobileNav()
+        if (mobile) resetMobileNav()
     }
 
 
     return (
         <header id='header-component' className={`${isHome ? 'mt-[-80px]' : ''} bg-white sticky top-0 z-50 hover:bg-white ${(!Opac) ? 'bg-opacity-100' : 'bg-opacity-20'}`}>
-            <nav className={`mx-auto flex items-center justify-between px-4 py-5 lg:px-8 ${mobileMenuOpen ? 'hidden sm:block' : ''}` } aria-label='Global'>
+            <nav className={`mx-auto flex items-center justify-between px-4 py-5 lg:px-8 ${mobileMenuOpen ? 'hidden sm:block' : ''}`} aria-label='Global'>
                 <div className='flex lg:flex-1`'>
                     {logo?.url && <Link url='/' className={'-m-1.5 ml-1.5 p-1.5'}>
                         <span className='sr-only'>Site Logo</span>
@@ -115,7 +115,7 @@ function Header (props: App.Header) {
                         {
                             (!mobileMenuOpen)
                             && <div className='h-6 w-6'>
-                                <LanguageSelector 
+                                <LanguageSelector
                                     locales={locales}
                                     Opac={Opac}
                                 />
@@ -130,7 +130,7 @@ function Header (props: App.Header) {
                         }}
                     >
                         <span className='sr-only'>Open main menu</span>
-                        {!mobileMenuOpen && <Bars3Icon className='h-6 w-6' aria-hidden='true' onClick={() => {setCurrPanel('')}} />}
+                        {!mobileMenuOpen && <Bars3Icon className='h-6 w-6' aria-hidden='true' onClick={() => { setCurrPanel('') }} />}
                     </button>
                 </div>
 
@@ -157,7 +157,7 @@ function Header (props: App.Header) {
                                 leaveFrom='opacity-100 translate-y-0'
                                 leaveTo='opacity-0 -translate-y-1'
                             >
-                                <Popover.Panel 
+                                <Popover.Panel
                                     className='absolute inset-x-0 top-0 -z-10 bg-white pt-14 shadow-lg ring-1 ring-gray-900/5 opacity-100 translate-y-0'
                                 >
                                     {item?.mega_menu?.[0]?.sections?.[0]?.links?.length && <div className='px-8'>
@@ -165,30 +165,34 @@ function Header (props: App.Header) {
                                             className='mx-auto px-6 xl:pr-0 xl:pl-8 py-10'
                                         >
                                             {item?.mega_menu?.[0]?.sections?.[0]?.links?.map((linkData, ind) => (
-                                                <div 
+                                                <div
                                                     key={linkData?.text}
                                                     className={'mb-8 mt-4 w-72 xl:w-40 xl:pr-8 pr-14'}
                                                     data-id={`navItem-${itemInd}-card-${ind}`}
                                                 >
-                                                    <div {...linkData?.$?.text}>
+                                                    <div {...item?.mega_menu?.[0]?.sections?.[0].$?.[`links__${ind}`]}>
                                                         {linkData?.text && <p
                                                             data-id='paragraph-text'
                                                             className='font-semibold text-gray-900 text-m mb-4'
+                                                            {...linkData?.$?.text}
                                                         >{linkData.text}
                                                         </p>}
                                                         <a
                                                             href={'/' + router.locale + linkData?.link?.[0]?.url}
                                                             className='flex flex-col outline-none'
                                                             onClick={() => setAttribute(String(linkData.text))}
+                                                            {...linkData?.$?.link}
                                                         >
                                                             {linkData?.thumbnail?.url && <img
                                                                 src={linkData.thumbnail.url.indexOf('?') > -1 ? `${linkData.thumbnail.url}&auto=webp&format=pjpg` : `${linkData.thumbnail.url}?auto=webp&format=pjpg`} className='object-cover h-40'
-                                                                alt={linkData?.thumbnail?.title}></img>
+                                                                alt={linkData?.thumbnail?.title}
+                                                                {...linkData?.$?.thumbnail}></img>
                                                             }
                                                             {linkData?.link?.[0]?.url && <span
                                                                 className='mt-4 font-light inline font-montserrat'
+                                                                {...linkData?.$?.link}
                                                             >
-                                                                {linkData?.link_text && linkData?.link_text} <ChevronRightIcon className='h-4 my-auto inline-block mb-1' />
+                                                                <span {...linkData?.$?.link_text}>{linkData?.link_text && linkData?.link_text}</span> <ChevronRightIcon className='h-4 my-auto inline-block mb-1' />
                                                             </span>}
                                                         </a>
                                                     </div>
@@ -200,16 +204,15 @@ function Header (props: App.Header) {
                                 </Popover.Panel>
                             </Transition>
                         </Popover> : <>
-                            {item?.link?.[0]?.url && <Link 
+                            {item?.link?.[0]?.url && <span {...item?.$?.link} className='flex items-center gap-x-1 text-m font-semibold leading-6 text-gray-900'><Link
                                 url={item.link[0].url}
-                                className='flex items-center gap-x-1 text-m font-semibold leading-6 text-gray-900'
                             >
-                                {item.text}
-                            </Link>}
+                                <span {...item?.$?.text}>{item.text}</span>
+                            </Link> </span>}
                         </>
                     ))}
                     {/* * [DESKTOP] LANGUAGE SELECTOR */}
-                    <LanguageSelector 
+                    <LanguageSelector
                         locales={locales}
                     />
                 </Popover.Group>
@@ -248,24 +251,23 @@ function Header (props: App.Header) {
                         <div className='-my-6 divide-y divide-gray-500/10'>
                             <div className='space-y-2 py-6'>
                                 <Disclosure as='div' className=''>
-
-                                    
-                                    {items  && items?.map((item, i: number) => (
+                                    {items && items?.map((item, i: number) => (
                                         item?.text
                                         && <Fragment key={`mobile-navItem-${i}`}>
                                             <div
-                                                className={' flex justify-between items-center py-2 pr-3'}
+                                                className={'flex justify-between items-center py-2 pr-3'}
                                                 data-id={`menuItem-${i}`}
                                             >
-                                                <Link
-                                                    url={item?.link}
-                                                    className={`${currPanel === item?.text ? '' : 'text-[#253143]'} block ml-6 mr-3 text-sm font-semibold font-montserrat leading-7 text-gray-900 hover:bg-gray-50`}
-                                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                                    // @ts-ignore
-                                                    $={{...item?.$?.text}}
-                                                >
-                                                    {item.text}
-                                                </Link>
+                                                <span className={`${currPanel === item?.text ? '' : 'text-[#253143]'} block ml-6 mr-3 text-sm font-semibold font-montserrat leading-7 text-gray-900 hover:bg-gray-50`}
+                                                    {...((item?.mega_menu?.[0]?.sections) ? '' : item?.$?.link)}>
+                                                    <Link
+                                                        url={item?.link}
+                                                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                                        // @ts-ignore
+                                                    >
+                                                        <span {...((item?.mega_menu?.[0]?.sections) ? '' : item?.$?.text)}>{item.text}</span>
+                                                    </Link>
+                                                </span>
                                                 {item && item?.mega_menu?.[0]?.sections && item?.mega_menu?.[0]?.sections?.length > 0 && <>
                                                     {currPanel === item?.text
                                                         ? <button
@@ -298,9 +300,8 @@ function Header (props: App.Header) {
                                                         key={`section-${ind}`}
                                                         data-id={`section-${ind}`}
                                                         className={`!items-start w-full ${currPanel === item?.text ? '' : 'hidden'}`}
-                                                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                                                        // @ts-ignore
-                                                        {...sect?.$?.title}
+                                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                                    // @ts-ignore
                                                     >
                                                         <div onClick={resetMobileNav}>
                                                             {sect?.title && <Link
@@ -317,9 +318,11 @@ function Header (props: App.Header) {
                                                             {sect?.links?.map((subitem) => (
                                                                 subitem?.text && <li key={subitem.text} className=''>
                                                                     <div onClick={() => setAttribute(String(subitem.text), true)}>
-                                                                        <Link url={subitem.link} className='-m-2 block p-2 pl-10 text-[#253143] text-[16.071px] text-justify font-normal font-montserrat leading-normal hover:underline'>
-                                                                            {subitem.text}
-                                                                        </Link>
+                                                                        <span {...subitem?.$?.link}>
+                                                                            <Link url={subitem.link} className='-m-2 block p-2 pl-10 text-[#253143] text-[16.071px] text-justify font-normal font-montserrat leading-normal hover:underline'>
+                                                                                <span {...subitem?.$?.text}>{subitem.text}</span>
+                                                                            </Link>
+                                                                        </span>
                                                                     </div>
                                                                 </li>
                                                             ))}
@@ -331,7 +334,7 @@ function Header (props: App.Header) {
                                     ))}
 
                                     {/* CTA Group*/}
-                                    {items  && items?.map((item, i: number) => (
+                                    {items && items?.map((item, i: number) => (
                                         <Fragment key={`ctaGroup-${i}`}>
                                             {(item?.text === currPanel) && item?.mega_menu?.[0]?.cta_group?.[0] && CTAGroup(item.mega_menu[0].cta_group[0])}
                                         </Fragment>

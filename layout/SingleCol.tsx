@@ -53,7 +53,7 @@ const SingleCol: React.FC<App.SingleColLayout> = (
                         logo={appConfig.logo}
                     />
                 }
-                <div className='single-col mx-auto h-10 !min-h-[100vh]'>
+                <div className='single-col mx-auto h-screen min-h-screen justify-center relative'>
                     {props.children}
                 </div>
                 {

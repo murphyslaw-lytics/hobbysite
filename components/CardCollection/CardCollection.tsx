@@ -9,7 +9,7 @@ import { CardCollectionBody } from './CardCollectionBody'
 import { CardTiles } from './CardTiles'
 
 const CardCollection: React.FC<CardCollectionProps> = (props: CardCollectionProps) => {
-    const { header, cards, totalCount, id } = props
+    const { header, cards, totalCount, id, $ } = props
 
     /**
      * ? Method to conditionally render the card collection or card tiles based on the total number of cards
@@ -25,6 +25,7 @@ const CardCollection: React.FC<CardCollectionProps> = (props: CardCollectionProp
                     id={id}
                     cards={cards}
                     totalCount={totalCount ? totalCount : (cards ? cards?.length : 0)}
+                    $={$}
                 />
             )
 
@@ -35,6 +36,7 @@ const CardCollection: React.FC<CardCollectionProps> = (props: CardCollectionProp
                 id={id}
                 cards={cards}
                 totalCount={totalCount ? totalCount : (cards ? cards?.length : 0)}
+                $={$}
             />
         )
 

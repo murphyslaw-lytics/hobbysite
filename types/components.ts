@@ -14,6 +14,30 @@ export interface InternalLink {
   _content_type_uid?: string;
   url?: string;
 }
+
+export interface ExternalLink {
+  $?: MappedPreview<ExternalLink>;
+  title?: string
+  href?:string
+}
+
+
+export interface SectionLink {
+  thumbnail?: Asset;
+  $?: MappedPreview<SectionLink>;
+  text?:string
+  link?:InternalLink[],
+  link_text?:string
+}
+
+export interface HeaderSection{
+  title?:string
+  $? : MappedPreview<HeaderSection>
+  link:InternalLink[]
+  links: SectionLink[]
+  [key: string]: MappedPreview<HeaderSection> | InternalLink[] | SectionLink[] | string | undefined;
+}
+
 export interface pageLink {
   $?: {
     'data-cslp':string
@@ -42,6 +66,7 @@ export interface CtaCollection {
   ctas?: Cta[];
 }
 export type Cta = {
+  $?: MappedPreview<Cta>;
   text?: string;
   external_url?: string;
   link?: InternalLink[];
@@ -115,6 +140,7 @@ export interface FeaturedArticles {
   articles?: ImageCardItem[] | [];
   heading?: string;
   sub_heading?: string;
+  [key: string]: MappedPreview<FeaturedArticles> | ImageCardItem[] | [] | string | undefined;
 }
 
 export interface FeaturedArticlesHeader {
@@ -145,6 +171,7 @@ export interface CardCollection {
   cards?: ImageCardItem[] | [];
   header?: CardCollectionHeader;
   totalCount?: number;
+  [key: string]: MappedPreview<CardCollection> | ImageCardItem[] | CardCollectionHeader | string | number | undefined;
 }
 
 export type ImageCardItem = ImageCardGraphics &
@@ -152,7 +179,8 @@ export type ImageCardItem = ImageCardGraphics &
     id?: string | number;
     key?: string | number;
     totalCount?: number;
-    $: MappedPreview<ImageCardGraphics & ImageCardText>;
+    $: MappedPreview<ImageCardGraphics & ImageCardText & CardCollection | undefined>;
+    index?: number;
 };
 
 export interface ImageCardGraphics extends Image {
@@ -185,6 +213,7 @@ export type RelatedLinks = {
   $?: {
     taxonomies?: {'data-cslp': string}
     related_links?: { 'data-cslp': string }
+    [key: string]: {'data-cslp': string} | undefined
   }
 }
 

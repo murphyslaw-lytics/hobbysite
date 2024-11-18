@@ -6,6 +6,6 @@
 .card:nth-child(even) {background: #E9EBF6}
 .card:nth-child(odd) {background: #FFE2E6}
 
-.card img {
+/* .card img {
     height: 24rem;
-}
+} */

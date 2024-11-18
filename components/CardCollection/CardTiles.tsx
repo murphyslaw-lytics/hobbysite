@@ -1,11 +1,12 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { classNames } from '@/utils'
-import { ImageCardItem } from '@/types/components'
+import { CardCollection, ImageCardItem } from '@/types/components'
+import { MappedPreview } from '@/types/common'
 import { CardTile } from '../CardTile'
 
 
-const CardTiles = ({cards, totalCount, id}:{ id?: string | number, cards?: ImageCardItem[]|[], totalCount: number }) => {
+const CardTiles = ({cards, totalCount, id, $}:{ id?: string | number, cards?: ImageCardItem[]|[], totalCount: number , $: MappedPreview<CardCollection | undefined>}) => {
 
     const [subTitle, setSubTitle] = useState(false)
 
@@ -46,6 +47,7 @@ const CardTiles = ({cards, totalCount, id}:{ id?: string | number, cards?: Image
                     'sm:grid-cols-2 lg:grid-cols-2 grid grid-cols-1 gap-y-12 sm:gap-x-6 xl:gap-x-8'
                 )
             }
+            {...$?.cards}
         >
             {cards?.map((cardData: ImageCardItem, idx: number) => {
                 return (<CardTile
@@ -55,6 +57,8 @@ const CardTiles = ({cards, totalCount, id}:{ id?: string | number, cards?: Image
                     count={cards.length}
                     totalCount={totalCount}
                     subtitleExists={subTitle}
+                    $ = {cardData.$ && $ ? { ...cardData.$, ...$ } : undefined}
+                    index={idx}
                 />
                 )
             })

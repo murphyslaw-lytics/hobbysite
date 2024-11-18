@@ -1,12 +1,13 @@
 import { ImageComponent } from '@/types/components'
+import { ImagePlaceholder } from '@/components'
 
 const Image: React.FC<ImageComponent> = (props: ImageComponent) => {
-    const { image, image_alt_text, className, is_thumbnail, addDataCslp=true } = props
+    const { image, image_alt_text, className, is_thumbnail, addDataCslp=true, $ } = props
 
     const queryParam = (is_thumbnail && is_thumbnail !== undefined ) ?  'auto=webp&format=pjpg&width=50p' : 'auto=webp&format=pjpg'
 
     return <>
-        {image?.url && <picture
+        {image?.url ? <picture
         >
             <source media='(max-width: 475px)' srcSet={image?.url.indexOf('?') > -1 ? `${image.url}&${queryParam}` : `${image.url}?${queryParam}`} />
             <source media='(min-width: 476px) and (max-width: 640px)' srcSet={image?.url.indexOf('?') > -1 ? `${image.url}&${queryParam}` : `${image.url}?${queryParam}`} /> {/* xs */}
@@ -22,8 +23,8 @@ const Image: React.FC<ImageComponent> = (props: ImageComponent) => {
                 data-id='image-component'
                 {...(addDataCslp && image?.$?.url)}
             />
-        </picture>}
+        </picture>
+            : <ImagePlaceholder className={className || ''} $={($?.image || $?.cover_image)} />}
     </>
 }
-
 export { Image }

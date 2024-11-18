@@ -1,8 +1,9 @@
 import { classNames } from '@/utils'
-import { ImageCardItem } from '@/types/components'
+import { CardCollection, ImageCardItem } from '@/types/components'
+import { MappedPreview } from '@/types/common'
 import { Card } from '../Card'
 
-const CardCollectionBody = ({cards, totalCount, id}:{ id?: string, cards?: ImageCardItem[]|[], totalCount: number }) => {
+const CardCollectionBody = ({cards, totalCount, id, $}:{ id?: string, cards?: ImageCardItem[]|[], totalCount: number, $: MappedPreview<CardCollection | undefined> }) => {
 
     const gridConfigurator  = () => {
 
@@ -32,15 +33,19 @@ const CardCollectionBody = ({cards, totalCount, id}:{ id?: string, cards?: Image
                     'grid grid-cols-1 gap-y-12 sm:gap-x-6 xl:gap-x-8'
                 )
             }
+            {...$?.cards}
         >
             {cards?.map((cardData: ImageCardItem, idx: number) => {
-                return (<Card
-                    id={id}
-                    key={idx}
-                    {...cardData}
-                    count={cards.length}
-                    totalCount={totalCount}
-                />
+                return (
+                    <div {...$?.[`cards__${idx}`]} key={idx}>
+                        <Card
+                            id={id}
+                            key={idx}
+                            {...cardData}
+                            count={cards.length}
+                            totalCount={totalCount}
+                        />
+                    </div>
                 )
             })
             }

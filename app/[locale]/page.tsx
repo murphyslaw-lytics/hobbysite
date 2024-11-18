@@ -36,13 +36,13 @@ export default function Home () {
         <>
             {data
                 ? <PageWrapper {...data} contentType='landing_page'>
-                    {data?.components && Object.keys(data.components)?.length
-                        ? <RenderComponents
+                    {data?.components
+                        ? <RenderComponents $={data?.$}
                             components={[
                                 // eslint-disable-next-line no-unsafe-optional-chaining
-                                ...data?.components,
-                                { featured_articles: data?.featured_articles }
+                                ...data?.components
                             ]}
+                            featured_articles={data?.featured_articles}
                         /> : ''}
                 </PageWrapper>
                 : <>

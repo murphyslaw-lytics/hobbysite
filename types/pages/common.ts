@@ -25,12 +25,14 @@ export interface pageBlocks {
     card_collection?:CardCollection
     image_preset?: Image
     seo?:SeoProps
-    featured_articles?: any;
   }
   
 export type pageRenderProps = {
     components:pageBlocks[];
     isABEnabled?:boolean;
+    [key: string]: string | boolean | pageBlocks[] | MappedPreview<pageRenderProps> | undefined;
+    $?: MappedPreview<pageRenderProps>;
+    featured_articles?: any;
   }
 export interface Article extends PageEntry,ArticleCover {
   content?:string

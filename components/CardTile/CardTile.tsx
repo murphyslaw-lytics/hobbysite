@@ -6,7 +6,7 @@ import { classNames, equalHeight, resolveCardCta } from '@/utils'
 import styles from './cardTile.module.css'
 
 const CardTile: React.FC<ImageCardItem> = (props: ImageCardItem) => {
-    const { $, image, image_alt_text, title, subtitle, cta, content, count, id, key, subtitleExists , is_thumbnail} = props
+    const { $, image, image_alt_text, title, subtitle, cta, content, count, id, key, subtitleExists, is_thumbnail, index } = props
 
     useEffect(() => {
         equalHeight('.card-tile-title') // onload
@@ -16,43 +16,46 @@ const CardTile: React.FC<ImageCardItem> = (props: ImageCardItem) => {
     })
 
     {/* eslint-disable-next-line jsx-a11y/alt-text */ }
-    const cardImage = image ? <Image
+    const cardImage = <Image
         image={image}
+        $={$}
         image_alt_text={image_alt_text}
         is_thumbnail={is_thumbnail}
         className={classNames(
-            count === 1 ? 'h-auto w-auto'
-                : count === 2 ? 'h-48 lg:h-64'
+            count === 1 ? 'h-[24rem] w-auto'
+                : count === 2 ? 'h-[24rem]'
                     : count === 3 ? 'h-48 lg:h-52'
                         : count && count >= 4 ? 'h-48 lg:h-52'
                             : '',
             'w-full object-center object-fit object-cover hover:opacity-90 hover:cursor-pointer rounded mt-6'
         )}
-    /> : <></>
+    />
 
     return (
         <div
             id={`card-tile-${id}-${key}`}
             key={`card-tile-${id}-${key}`}
             className={`group h-full relative flex flex-col justify-between ${styles.card}`}
-            {...$?.title}
+            {...$?.[`cards__${index}`]}
         >
             <div className='flex flex-col'>
                 <div className='text-xl text-gray-500 dark:text-white text-center'>
                     {title
                         && <h4
                             data-id='h4-text'
-                            className='block text-4xl font-montserrat font-semibold text-black card-tile-title'>
+                            className='block text-4xl font-montserrat font-semibold text-black card-tile-title'
+                            {...$?.title}>
                             {title}
                         </h4>
                     }
                 </div>
 
                 {
-                    subtitleExists && <div className=' mt-4 text-center'>
+                    subtitleExists && <div className='mt-4 text-center'>
                         <span
                             data-id='span-text'
-                            className='text-2xl font-montserrat text-black font-normal'>
+                            className='text-2xl font-montserrat text-black font-normal card-subtitle'
+                            {...$?.subtitle}>
                             {subtitle ? subtitle : '\xa0'}
                         </span>
                     </div>
@@ -67,19 +70,20 @@ const CardTile: React.FC<ImageCardItem> = (props: ImageCardItem) => {
                     {cardImage}
                 </>}
 
-                {content && <p data-id='paragraph-text' className='mt-6 p-0 text-base leading-5 text-black dark:text-white card-content'
+                {content && <p data-id='paragraph-text' className='mt-6 p-0 text-base leading-5 text-black dark:text-white card-content whitespace-break-spaces'
+                    {...$?.content}
                 >
                     {content}
                 </p>
                 }
             </div>
             <div>
-                {cta?.text && cta?.link && !isString(cta) && cta?.text && <p className='mt-6 text-base font-semibold !text-black/50 flex flex-row items-center gap-[8px] '>
+                {cta?.text && cta?.link && !isString(cta) && cta?.text && <p className='mt-6 text-base font-semibold !text-black/50 flex flex-row items-center gap-[8px]' {...cta?.$?.link}>
                     <Link
                         url={resolveCardCta(cta)}
                         className='!text-black/50 font-montserrat text-sm border-b-2 border-transparent hover:border-black/50 !leading-[20px]'
                     >
-                        {(cta.text).toUpperCase()}
+                        {cta.text && cta.text !== '' ? <span {...cta?.$?.text}>{(cta.text).toUpperCase()}</span> : <span {...cta?.$?.text}>CTA PLACEHOLDER</span>}
                     </Link>
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
