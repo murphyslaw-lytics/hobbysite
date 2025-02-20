@@ -1,11 +1,24 @@
 import { EntryEmbedable } from '@contentstack/utils'
-import { related_articles, related_links } from './components'
 import { Taxonomy } from './pages/common'
 
-export type MappedPreview<T> = {
+
+/**
+ * LivePreviewTypeMapper<T> is a generic type that transforms each property of a given type `T` 
+ * into an object containing a `data-cslp` property of type `string`.
+ *
+ * This type mapping ensures that every key in `T` is retained, but its value is replaced 
+ * with an object structured as `{ data-cslp: string }`.
+ *
+ * @template T - The original type whose properties will be transformed.
+ */
+export type LivePreviewTypeMapper<T> = {
   [K in keyof T]: { 'data-cslp': string }
 }
+// live preview mode type
+export type LivePreviewMode = 'builder' | 'preview' | undefined;
 
+
+/* The `CommonSystemInfo` interface defines the common system information of Contentstack's Entry and Asset */
 export interface CommonSystemInfo {
   ACL?: {
     roles: [],
@@ -34,28 +47,13 @@ export interface CommonSystemInfo {
   tags?: string[]
   title?: string
   uid:string
-  show_related_links?: boolean
-  region?:string[]
-  topics?:string[]
-  show_related_articles?: boolean
-  related_articles?: related_articles
-  related_links?: related_links
   updated_at?: Date
   updated_by?: string
 }
 
-export type PageEntry = EmbedEntry & {
-  // $?: MappedPreview<PageEntry>
-  url: string
-  taxonomies: Taxonomy[]
-}
-
-export interface EmbedEntry extends Entry, EntryEmbedable {
-  embedableArray?: EntryEmbedable[]
-}
-
+// Contentstack Entry Type
 export type Entry = CommonSystemInfo & {
-  $?: MappedPreview<Entry & CommonSystemInfo>
+  $?: LivePreviewTypeMapper<Entry & CommonSystemInfo>
   locale?: string
   _in_progress?: boolean
   _owner?: {
@@ -82,12 +80,12 @@ export type Entry = CommonSystemInfo & {
     updated_at: string
     username: string
   }
-  featured_articles?: any;
   _version?: number
 }
 
+// Contentstack Asset Type
 export type Asset = CommonSystemInfo & {
-  $?: MappedPreview<CommonSystemInfo & Asset>
+  $?: LivePreviewTypeMapper<CommonSystemInfo & Asset>
   content_type?: string
   dimension?: {
     height: number
@@ -100,6 +98,16 @@ export type Asset = CommonSystemInfo & {
   _version?: number
 }
 
+// Represents a page entry that extends EmbedEntry with additional properties
+export type PageEntry = EmbedEntry & {
+  url: string
+  taxonomies: Taxonomy[]
+}
+export interface EmbedEntry extends Entry, EntryEmbedable {
+  embedableArray?: EntryEmbedable[]
+}
+
+// Locales Type <----
 export type Locale = {
   code: string;
   fallback_locale: string | null;
@@ -107,8 +115,10 @@ export type Locale = {
 }
 
 export type localeItems = Locale[]
+// ---->
 
-export type PersonalizeConfig = EmbedEntry & {
+// PersonalizeConfig Type <----
+export type PersonalizeConfig = Entry & {
   audiences: Audiences
   taxonomy_path: string
 }
@@ -126,3 +136,24 @@ export type Attributes = {
   key?: string
   value?: string
 }
+// ---->
+
+export interface InternalLink {
+  $?: LivePreviewTypeMapper<InternalLink>;
+  uid?: string;
+  _content_type_uid?: string;
+  url?: string;
+}
+
+export interface ExternalLink {
+  $?: LivePreviewTypeMapper<ExternalLink>;
+  title?: string
+  href?:string
+}
+
+export type CTA = {
+  $?: LivePreviewTypeMapper<CTA>;
+  text?: string;
+  external_url?: string;
+  link?: InternalLink[];
+};

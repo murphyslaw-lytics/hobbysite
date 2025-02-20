@@ -3,6 +3,17 @@ import parse from 'html-react-parser'
 
 import { Text as TextType } from '@/types/components'
 
+/**
+ * Text component that renders content with styling
+ * @param {Object} props - Component props
+ * @param {Object} props.$ - Optional object containing data-cslp attributes
+ * @param {string} props.content - The HTML content to be rendered
+ * @param {Object} props.styles - Styling options
+ * @param {string} props.styles.background_color - Background color option ('primary' or 'secondary')
+ * @param {string|number} [props.id] - Optional ID for the text container
+ * @returns {JSX.Element} Rendered text component
+ */
+
 const Text: FunctionComponent<TextType> = (props: TextType) => {
     const { $, content, styles, id } = props
 

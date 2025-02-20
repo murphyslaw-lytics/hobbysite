@@ -11,13 +11,22 @@ import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/20/solid'
 import { Carousel, CTAGroup, Link } from '@/components'
 import { App } from '@/types'
 import useRouterHook from '@/hooks/useRouterHook'
-import { getJsonCookie, getPersonalizeAttribute, isCookieExist } from '@/utils'
+import { equalHeight, getJsonCookie, getPersonalizeAttribute, isCookieExist, removeSpecialChar } from '@/utils'
 import { localeCookieName } from '@/config'
-import { Locale } from '@/types/common'
+import { LivePreviewTypeMapper, Locale  } from '@/types/common'
 import { usePersonalization } from '@/context'
+import { MegaMenuSection } from '@/types/app'
 import { LanguageSelector } from '../LanguageSelector'
 
-function Header (props: App.Header) {
+/**
+ * React component that renders the header section of a website.
+ * 
+ * @param {App.Header} props - Component props
+ * @param {App.Logo} props.logo - Logo object containing the URL and title of the logo
+ * @param {App.NavItems[]} props.items - Array of menu items
+ * @returns {JSX.Element} Header component
+ */
+function Header (props: App.Header): JSX.Element {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [data, setData] = useState(props)
@@ -29,6 +38,9 @@ function Header (props: App.Header) {
     const [, setOpen] = useState(false)
     const [locales, setLocales] = useState<Locale[] | []>([])
     const { path } = useRouterHook()
+
+    // Determine if the current page is the home page (or AB Test Landing Page) or not
+    // Further used to set transparency of the header if the page is the home page or AB Test Landing Page
     const isHome: boolean = (path === '/' || path === process.env.CONTENTSTACK_AB_LANDING_PAGE_PATH) ? true : false
 
     const { personalizationSDK, personalizeConfig } = usePersonalization()
@@ -61,6 +73,24 @@ function Header (props: App.Header) {
         }
     }, [])
 
+    // Function for equal height of the carousel card titles on resizing the window
+    const titleHeightResizeHandler = () => {
+        equalHeight('.header-carousel-card-title')
+    }
+
+    // Function for equal height of the carousel card titles on opening the panel
+    const onPanelOpening = () => {
+        equalHeight('.header-carousel-card-title')
+
+        window.addEventListener('resize', titleHeightResizeHandler)
+    }
+
+    // Function for removing the event listener on closing the panel
+    const onPanelClosing = () => {
+        window.removeEventListener('resize', titleHeightResizeHandler)
+    }
+
+    // Function for opening the item menu in mobile side bar
     const handleMouseOver = (e: React.MouseEvent) => {
         const title = (e.target as HTMLElement).getAttribute('data-title') || (e.target as HTMLElement)?.parentElement?.getAttribute('data-title')
         if (title && title !== null) {
@@ -72,6 +102,8 @@ function Header (props: App.Header) {
         setCurrPanel('')
     }
 
+
+    // Function for closing the item menu in mobile side bar
     const handleClose = (e: React.MouseEvent) => {
         const boundingRect = document.querySelector('.panel.block')?.getBoundingClientRect()
         let isSectionActive = false
@@ -83,10 +115,11 @@ function Header (props: App.Header) {
         setOpen(false)
     }
 
+    // Set the attribute for personalization
     const setAttribute = async (region: string, mobile = false) => {
-        const criteria = region.toLowerCase()
-        const attributes = getPersonalizeAttribute(audiences, criteria)
-        await personalizationSDK.set({ ...attributes })
+        const criteria = region.split('/').pop()?.toLowerCase()
+        const attributes = getPersonalizeAttribute(audiences, removeSpecialChar(String(criteria)))
+        await personalizationSDK?.set({ ...attributes })
 
         if (mobile) resetMobileNav()
     }
@@ -137,7 +170,7 @@ function Header (props: App.Header) {
                 {/* DESKTOP MENU */}
                 <PopoverGroup className='hidden lg:flex lg:gap-x-12'>
                     {items?.map((item, itemInd) => (
-                        item?.mega_menu?.length ? <Popover key={item.text} data-id={`navItem-${itemInd}`} className='flex'>
+                        item?.mega_menu?.length ? <Popover key={`navItem-${itemInd}`} data-id={`navItem-${itemInd}`} className='flex'>
                             <PopoverButton
                                 className='flex items-center gap-x-1 text-m font-semibold leading-6 text-gray-900 outline-none'
                             >
@@ -156,6 +189,8 @@ function Header (props: App.Header) {
                                 leave='transition ease-in duration-150'
                                 leaveFrom='opacity-100 translate-y-0'
                                 leaveTo='opacity-0 -translate-y-1'
+                                beforeEnter={() => onPanelOpening()}
+                                beforeLeave={() => onPanelClosing()}
                             >
                                 <PopoverPanel
                                     className='absolute inset-x-0 top-0 -z-10 bg-white pt-14 shadow-lg ring-1 ring-gray-900/5 opacity-100 translate-y-0'
@@ -170,17 +205,18 @@ function Header (props: App.Header) {
                                                     className={'mb-8 mt-4 w-72 xl:w-40 xl:pr-8 pr-14'}
                                                     data-id={`navItem-${itemInd}-card-${ind}`}
                                                 >
-                                                    <div {...item?.mega_menu?.[0]?.sections?.[0].$?.[`links__${ind}`]}>
+                                                    <div {...item?.mega_menu?.[0]?.sections?.[0].$?.[`links__${ind}` as keyof LivePreviewTypeMapper<MegaMenuSection>]}>
                                                         {linkData?.text && <p
                                                             data-id='paragraph-text'
-                                                            className='font-semibold text-gray-900 text-m mb-4'
+                                                            className='font-semibold text-gray-900 text-m mb-4 header-carousel-card-title'
+                                                            onChange={() => equalHeight('.header-carousel-card-title')}
                                                             {...linkData?.$?.text}
                                                         >{linkData.text}
                                                         </p>}
                                                         <a
                                                             href={'/' + router.locale + linkData?.link?.[0]?.url}
                                                             className='flex flex-col outline-none'
-                                                            onClick={() => setAttribute(String(linkData.text))}
+                                                            onClick={() => setAttribute(String(linkData?.link?.[0]?.url))}
                                                             {...linkData?.$?.link}
                                                         >
                                                             {linkData?.thumbnail?.url && <img
@@ -203,13 +239,13 @@ function Header (props: App.Header) {
                                     {item?.mega_menu?.[0]?.cta_group?.[0] && CTAGroup(item.mega_menu[0].cta_group[0])}
                                 </PopoverPanel>
                             </Transition>
-                        </Popover> : <>
+                        </Popover> : <Fragment key={`navItem-${itemInd}`}>
                             {item?.link?.[0]?.url && <span {...item?.$?.link} className='flex items-center gap-x-1 text-m font-semibold leading-6 text-gray-900'><Link
                                 url={item.link[0].url}
                             >
                                 <span {...item?.$?.text}>{item.text}</span>
                             </Link> </span>}
-                        </>
+                        </Fragment>
                     ))}
                     {/* * [DESKTOP] LANGUAGE SELECTOR */}
                     <LanguageSelector
@@ -317,7 +353,7 @@ function Header (props: App.Header) {
                                                         >
                                                             {sect?.links?.map((subitem) => (
                                                                 subitem?.text && <li key={subitem.text} className=''>
-                                                                    <div onClick={() => setAttribute(String(subitem.text), true)}>
+                                                                    <div onClick={() => setAttribute(String(subitem?.link?.[0].url), true)}>
                                                                         <span {...subitem?.$?.link}>
                                                                             <Link url={subitem.link} className='-m-2 block p-2 pl-10 text-[#253143] text-[16.071px] text-justify font-normal font-montserrat leading-normal hover:underline'>
                                                                                 <span {...subitem?.$?.text}>{subitem.text}</span>

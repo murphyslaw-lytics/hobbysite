@@ -1,7 +1,16 @@
 import { CardCollectionHeader as CardCollectionHeaderType} from '@/types/components'
-// import { Header as HeaderProps } from '@/types/components'
 
-const CardCollectionHeader: React.FC<CardCollectionHeaderType> = (props: CardCollectionHeaderType) => {
+/**
+ * A component that renders the header for a collection of cards.
+ * 
+ * @component
+ * @param {CardCollectionHeaderType} props - The props for the CardCollectionHeader component.
+ * @param {Object} props.$ - Optional object containing data-cslp attributes
+ * @param {string} props.heading - The heading for the CardCollectionHeader component.
+ * @param {string} props.sub_heading - The sub heading for the CardCollectionHeader component.
+ * @returns {JSX.Element} The header for a collection of cards.
+ */ 
+const CardCollectionHeader: React.FC<CardCollectionHeaderType> = (props: CardCollectionHeaderType): JSX.Element => {
     const { $, heading, sub_heading } = props
 
     return (

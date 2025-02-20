@@ -1,8 +1,18 @@
+import { VB_EmptyBlockParentClass } from '@contentstack/live-preview-utils'
 import { CardCollection, FeaturedArticles, Teaser, Text, TextAndImage } from '@/components'
 import { Page } from '@/types'
 import { pageBlocks } from '@/types/pages'
 import { isDataInLiveEdit } from '@/utils'
-import { VB_EmptyBlockParentClass } from '@contentstack/live-preview-utils'
+
+/**
+ * Renders different components based on the provided page data
+ * @param {Object} props - Component properties
+ * @param {Array} props.components - Array of page components to render
+ * @param {Object} props.featured_articles - Featured articles data
+ * @param {Object} props.$ - Optional object containing data-cslp attributes
+ * @param {boolean} [props.isABEnabled=false] - Flag to enable A/B testing
+ * @returns {JSX.Element} Rendered components
+ */
 
 function RenderComponents ({ components, featured_articles, $, isABEnabled = false }: Page.pageRenderProps) {
 

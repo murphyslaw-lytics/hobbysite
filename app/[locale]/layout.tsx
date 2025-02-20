@@ -1,11 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
-import { SingleCol } from '@/layout'
+import { MainLayout } from '@/MainLayout'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import '../globals.css'
-import '@/styles/style.css'
 import '/node_modules/flag-icons/css/flag-icons.min.css'
 import {PersonalizationProvider} from '@/context'
 
@@ -16,6 +15,12 @@ export const metadata: Metadata = {
     description: 'Provided by Contentstack'
 }
 
+/**
+ * @component RootLayout 
+ * @description default layout component of the app
+ * 
+ * @returns {JSX.Element}
+*/
 export default async function RootLayout ({
     children
 }: Readonly<{
@@ -26,9 +31,9 @@ export default async function RootLayout ({
         <html lang='en'>
             <body className={inter.className}>
                 <PersonalizationProvider>
-                    <SingleCol>
+                    <MainLayout>
                         {children}
-                    </SingleCol>
+                    </MainLayout>
                 </PersonalizationProvider>
             </body>
         </html>

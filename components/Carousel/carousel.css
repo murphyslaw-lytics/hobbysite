@@ -13,3 +13,8 @@
 .slick-list {
     @apply !pl-6 xl:!pl-0
 }
+
+.slick-prev::before,
+.slick-next::before {
+  display: none;
+}

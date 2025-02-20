@@ -2,6 +2,17 @@ import React from 'react'
 import { Image } from '@/components'
 import { ArticleCover as ArticleCoverType } from '@/types/components'
 
+/**
+ * Article cover component that displays title, cover image, and summary
+ * @component
+ * @param {Object} props - Component props
+ * @param {string} [props.title] - Article title
+ * @param {string} [props.summary] - Article summary
+ * @param {Object} props.cover_image - Cover image object
+ * @param {Object} [props.$] - Optional object containing data-cslp attributes
+ * @returns {JSX.Element} Article cover component
+ */
+
 const ArticleCover:React.FC<ArticleCoverType> = (props:ArticleCoverType) => {
     const {title, summary, cover_image, $} = props
     return( <div className={'px-8 pt-16 mb-8'}>

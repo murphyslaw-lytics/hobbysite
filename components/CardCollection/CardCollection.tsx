@@ -8,8 +8,19 @@ import { CardCollectionBody } from './CardCollectionBody'
 
 import { CardTiles } from './CardTiles'
 
-const CardCollection: React.FC<CardCollectionProps> = (props: CardCollectionProps) => {
-    const { header, cards, totalCount, id, $ } = props
+/**
+ * React component that renders a collection of cards or card tiles based on the number of cards provided.
+ * 
+ * @param {CardCollectionProps} props - Component props
+ * @param {string} props.header - Header object containing heading and sub-heading
+ * @param {Array} props.cards - Array of card objects
+ * @param {number} props.count - Total number of cards
+ * @param {string} props.id - Unique identifier for the card collection
+ * @param {Object} props.$ - Optional object containing data-cslp attributes
+ * @returns {JSX.Element} Collection of cards or card tiles
+ */
+const CardCollection: React.FC<CardCollectionProps> = (props: CardCollectionProps): JSX.Element => {
+    const { header, cards, count, id, $ } = props
 
     /**
      * ? Method to conditionally render the card collection or card tiles based on the total number of cards
@@ -18,13 +29,13 @@ const CardCollection: React.FC<CardCollectionProps> = (props: CardCollectionProp
     */
     const CardCollectionHandler = () => {
         
-        if ((totalCount && totalCount > 2) || cards && cards?.length > 2) {
+        if ((count && count > 2) || cards && cards?.length > 2) {
 
             return (
                 <CardCollectionBody
                     id={id}
                     cards={cards}
-                    totalCount={totalCount ? totalCount : (cards ? cards?.length : 0)}
+                    count={count ? count : (cards ? cards?.length : 0)}
                     $={$}
                 />
             )
@@ -35,7 +46,7 @@ const CardCollection: React.FC<CardCollectionProps> = (props: CardCollectionProp
             <CardTiles
                 id={id}
                 cards={cards}
-                totalCount={totalCount ? totalCount : (cards ? cards?.length : 0)}
+                count={cards?.length || 0}
                 $={$}
             />
         )

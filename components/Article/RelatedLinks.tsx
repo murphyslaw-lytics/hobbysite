@@ -1,8 +1,18 @@
 import React from 'react'
 import { Link } from '@/components'
-import { RelatedLinks as RelatedLinksType } from '@/types/components'
+import { RelatedLinksComponent } from '@/types/components'
 
-const RelatedLinks: React.FC<RelatedLinksType> = (props: RelatedLinksType) => {
+/**
+ * RelatedLinks component displays a list of related links with an optional label
+ * @component
+ * @param {Object} props - Component props
+ * @param {Array} props.relatedLinks - Array of related link objects containing url and title
+ * @param {Object} props.relatedLinksLabel - Label object containing text and metadata
+ * @param {Object} props.$ - Optional object containing data-cslp attributes
+ * @returns {JSX.Element} RelatedLinks component
+ */
+
+const RelatedLinks: React.FC<RelatedLinksComponent> = (props: RelatedLinksComponent) => {
     const { relatedLinks, relatedLinksLabel, $ } = props
 
     return (<div className={'px-8 my-16'} id='related-region-topics'>

@@ -8,7 +8,7 @@ body {
   @apply bg-white dark:bg-black !font-montserrat
 }
 
-.single-col {
+.main-layout {
   min-height: 90vh;
 }
 

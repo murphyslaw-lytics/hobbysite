@@ -1,4 +1,9 @@
+import Link from 'next/link'
 
+/**
+ * NotFoundComponent - A React component that displays a 404 error message on page
+ * @returns {JSX.Element} A React component for the 404 error page
+ */
 const NotFoundComponent = () => {
     return (
         <div 
@@ -11,12 +16,12 @@ const NotFoundComponent = () => {
                 <h1 id='h1-text' className='mt-4 tracking-tight text-gray-900 dark:text-white'>Page not found</h1>
                 <p data-id='paragraph-text' className='mt-6 text-base leading-7 text-gray-600 dark:text-white'>Sorry, we couldn&prime;t find the page you&prime;re looking for.</p>
                 <div className='mt-10 flex items-center justify-center gap-x-6'>
-                    <a
+                    <Link
                         href='/'
                         className='text-sm font-semibold text-gray-900 dark:text-white hover:text-purple'
                     >
                         Go back home <span aria-hidden='true'>&rarr;</span>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>

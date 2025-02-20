@@ -4,6 +4,28 @@ import { Teaser as TeaserProps } from '@/types/components'
 import { Image, Link, Video } from '@/components'
 import { isDataInLiveEdit, resolveCta } from '@/utils'
 
+/**
+ * Teaser Component
+ * 
+ * A React component that displays a teaser section with background media (image or video),
+ * heading, content, and a call-to-action button.
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {Object} props.$ - Optional object containing data-cslp attributes
+ * @param {string} props.heading - The main heading text
+ * @param {string} props.content - The content text
+ * @param {Array} props.cta - Call-to-action button configuration
+ * @param {Array} props.image - Image configuration for background
+ * @param {Object} props.video - Video configuration for background
+ * @param {Object} props.styles - Styling configuration object
+ * @param {string} props.styles.text_align - Text alignment position (e.g., 'Top Left', 'Middle Center', etc.)
+ * @param {string} props.id - Unique identifier for the teaser
+ * @param {boolean} props.isABEnabled - Flag for A/B testing functionality
+ * 
+ * @returns {React.ReactElement} A teaser section with background media and content
+ */
+
 const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
     const { $, heading, content, cta, image, video, styles, id, isABEnabled } = props
 
@@ -39,6 +61,10 @@ const Teaser: React.FC<TeaserProps> = (props: TeaserProps) => {
     }
 
 
+    /* this below useEffect is to set the height of the teaser container based on the poision of the teaser
+       in modular blocks of home_page, this will check if the teaser is the first one in the page 
+       then it will set the height of the teaser container to the height of the screen (full viewport)
+    */
     useEffect(() => {
         document.querySelectorAll('.teaser-container').forEach((element)=>{
             if(element.getAttribute('id')=='teaser-0'){

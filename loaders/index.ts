@@ -1,6 +1,0 @@
-export * from  './home'
-export * from  './landing'
-export * from  './articleListing'
-export * from  './article'
-export * from  './app'
-export * from  './personalize'

@@ -1,10 +1,31 @@
-import { ArticleCardItem, FeaturedArticles as FeaturedArticlesProps } from '@/types/components'
-import { FeaturedArticlesHeader } from './FeaturedArticlesHeader'
-import { FeaturedArticlesBody } from './FeaturedArticlesBody'
+import { FeaturedArticles as FeaturedArticlesProps, ImageCardItem } from '@/types/components'
+import { CardCollectionHeader } from '../CardCollection/CardCollectionHeader'
+import { CardCollectionBody } from '../CardCollection/CardCollectionBody'
 
+/**
+ * FeaturedArticles component displays a collection of featured articles with images
+ * @component
+ * @param {Object} props - Component props
+ * @param {string} props.heading - Main heading text for the featured articles section
+ * @param {string} props.sub_heading - Sub heading text displayed below the main heading
+ * @param {Array} props.articles - Array of article objects 
+ * @param {string} props.id - Unique identifier for the component
+ * @param {Object} props.$ - Object containing data-cslp attributes for live preview
+ * @returns {JSX.Element} Rendered FeaturedArticles component
+ */
 const FeaturedArticles: React.FC<FeaturedArticlesProps> = (props: FeaturedArticlesProps) => {
 
     const { heading, sub_heading, articles, id, $ } = props
+
+    const cards: ImageCardItem[] | [] =  articles?.map((article) => {
+        return ({
+            title: article?.title,
+            content: article?.summary,
+            image: article?.cover_image,
+            $: article?.$,
+            cta: article?.url
+        })
+    }) as ImageCardItem[] | []
 
     return (
         <div
@@ -12,25 +33,23 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = (props: FeaturedArticl
             className={'pb-8 px-8 sm:pb-12'}
         >
             <div className='max-w-7xl mx-auto '>
-
-                {(heading || sub_heading) && <FeaturedArticlesHeader
-                    id={id}
+                <CardCollectionHeader
                     heading={heading}
                     sub_heading={sub_heading}
                     $={$}
-                />}
-
-                <FeaturedArticlesBody
+                />
+                <CardCollectionBody 
+                    cards={cards}
                     id={id}
-                    cards={articles as ArticleCardItem[]}
-                    totalCount={articles ? articles?.length : 0}
+                    count={cards?.length || 0}
                     $={$}
+                    editKey='articles' // this prefix is used for accessing data-cslp attributes (edit tags) of object key 'articles'
+
                 />
             </div>
         </div>
     )
 
 }
-
 
 export { FeaturedArticles }

@@ -1,5 +1,5 @@
 import { Link } from '@/components'
-import { CallToAction } from '@/types/components'
+import { CallToAction } from '@/types/app'
 import { classNames } from '@/utils'
 
 const CTAGroup = (cta_group: { call_to_action?: CallToAction[] }) => (<>
