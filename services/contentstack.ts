@@ -55,8 +55,8 @@ export const getEntries = async <T>(contentTypeUid: string, locale: string , ref
             if (limit !== 0) entryQuery.limit(limit)
 
             result = await entryQuery
-                .addParams({include_metadata: 'true'})
-                .addParams({include_applied_variants: true})
+                .addParams({ include_metadata: true })
+                .addParams({ include_applied_variants: true })
                 .find() as { entries: T[] }
 
             const data = result?.entries as EmbeddedItem[]
@@ -120,8 +120,8 @@ export const getEntryByUrl = async <T> (contentTypeUid: string, locale: string, 
         if (entryQuery) {
             result = await entryQuery.query()
                 .equalTo('url', entryUrl)
-                .addParams({ 'include_metadata': 'true' })
-                .addParams({ 'include_applied_variants': true })
+                .addParams({ include_metadata: true })
+                .addParams({ include_applied_variants: true })
                 .find() as { entries: T[] }
             
             const data = result?.entries?.[0] as EmbeddedItem
