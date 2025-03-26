@@ -4,8 +4,21 @@ import { Image, Link } from '@/components'
 import { ImageCardItem } from '@/types/components'
 import { classNames, resolveCardCta } from '@/utils'
 
+/**
+ * Card component that displays an image, title, content, and call-to-action
+ * @param {Object} props - Component props
+ * @param {Object} props.$ - Optional object containing data-cslp attributes for live preview
+ * @param {string|Object} props.image - Contentstack image object
+ * @param {string} props.image_alt_text - Alt text for the image
+ * @param {string} props.title - Card title
+ * @param {string|Object} props.cta - Call-to-action object containing text and url information
+ * @param {string} props.content - Card content
+ * @param {number} props.count - Number of cards in the grid
+ * @param {string|number} props.id - Unique identifier for the card
+ * @returns {JSX.Element} Card component
+ */
 const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
-    const { $, image, image_alt_text, title, cta, content, count, key, id } = props
+    const { $, image, image_alt_text, title, cta, content, count, id } = props
 
     {/* eslint-disable-next-line jsx-a11y/alt-text */ }
     const cardImage = <Image
@@ -27,17 +40,12 @@ const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
             url={resolveCardCta(cta)}
         >
             <div
-                id={`card-${id}-${key}`}
+                id={`card-${id}`}
                 className={'group h-full relative flex flex-col justify-between'}
             >
                 <div className='flex flex-col'>
-                    {cta ? <Link
-                        url={resolveCardCta(cta)}
-                    >
-                        {cardImage}
-                    </Link> : <>
-                        {cardImage}
-                    </>}
+                    
+                    {cardImage}
 
                     <div className='mt-6 text-xl text-black dark:text-white'>
                         {title
@@ -61,12 +69,9 @@ const Card: React.FC<ImageCardItem> = (props: ImageCardItem) => {
                 <div>
                     {cta && !isString(cta) && cta?.text && <p className='mt-3 text-base font-semibold !text-purple'
                         {...cta.$?.link}>
-                        <Link
-                            url={resolveCardCta(cta)}
-                            className='!text-purple hover:border-b-2  hover:border-purple cursor-pointer'
-                        >
+                        <>
                             {cta.text && cta.text !== '' ? <span {...cta?.$?.text}>{cta.text}</span> : <span {...cta?.$?.text}>CTA PLACEHOLDER</span>}
-                        </Link> &rarr;
+                        </> &rarr;
                     </p>
                     }
                 </div>

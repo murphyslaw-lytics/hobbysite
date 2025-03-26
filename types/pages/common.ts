@@ -1,5 +1,5 @@
-import { ArticleCover, CardCollection, Image, related_links, Teaser, Text, TextAndImage } from '../components'
-import { localeItems, MappedPreview, PageEntry } from '../common'
+import { ArticleCover, CardCollection, FeaturedArticles, Image, RelatedArticles, RelatedLinks, Teaser, Text, TextAndImage } from '../components'
+import { LivePreviewTypeMapper, localeItems, PageEntry } from '../common'
 
 export type SeoProps = {
   title?: string
@@ -19,26 +19,32 @@ export type SeoProps = {
 }
 
 export interface pageBlocks {
-    teaser?:Teaser
-    text_and_image?:TextAndImage
-    text?: Text
-    card_collection?:CardCollection
-    image_preset?: Image
-    seo?:SeoProps
-  }
+  teaser?:Teaser
+  text_and_image?:TextAndImage
+  text?: Text
+  card_collection?:CardCollection
+  image_preset?: Image
+  seo?:SeoProps
+}
   
 export type pageRenderProps = {
-    components:pageBlocks[];
-    isABEnabled?:boolean;
-    [key: string]: string | boolean | pageBlocks[] | MappedPreview<pageRenderProps> | undefined;
-    $?: MappedPreview<pageRenderProps>;
-    featured_articles?: any;
-  }
-export interface Article extends PageEntry,ArticleCover {
+  components: pageBlocks[];
+  isABEnabled?: boolean;
+  [key: string]: string | boolean | pageBlocks[] | FeaturedArticles | LivePreviewTypeMapper<pageRenderProps> | undefined;
+  $?: LivePreviewTypeMapper<pageRenderProps>;
+  featured_articles?: FeaturedArticles;
+} 
+
+// Article Type <-----
+export interface Article extends PageEntry, ArticleCover {
   content?:string
-  related_links?: related_links
-  $?: MappedPreview<Article>
+  show_related_articles?: boolean
+  show_related_links?: boolean
+  related_links?: RelatedLinks
+  related_articles?: RelatedArticles
+  $?: LivePreviewTypeMapper<Article>
 }
+// ----->
 
 export type Taxonomy = {
   taxonomy_uid:string,

@@ -3,10 +3,26 @@ import { isString } from 'lodash'
 import { Image, Link } from '@/components'
 import { ImageCardItem } from '@/types/components'
 import { classNames, equalHeight, resolveCardCta } from '@/utils'
+import { LivePreviewTypeMapper } from '@/types/common'
 import styles from './cardTile.module.css'
 
+/**
+ * CardTile component that displays an image, title, content, and call-to-action
+ * @param {Object} props - Component props
+ * @param {Object} props.$ - Optional object containing data-cslp attributes for live preview
+ * @param {string|Object} props.image - Contentstack image object
+ * @param {string} props.image_alt_text - Alt text for the image
+ * @param {string} props.title - Card title
+ * @param {string|Object} props.cta - Call-to-action object containing text and url information
+ * @param {string} props.content - Card content
+ * @param {number} props.count - Number of cards in the grid
+ * @param {string|number} props.id - Unique identifier for the card
+ * @param {boolean} props.is_thumbnail - Whether the card is a thumbnail
+ * @param {number} props.index - Index of the card in the grid
+ * @returns {JSX.Element} Card component
+ * */
 const CardTile: React.FC<ImageCardItem> = (props: ImageCardItem) => {
-    const { $, image, image_alt_text, title, subtitle, cta, content, count, id, key, subtitleExists, is_thumbnail, index } = props
+    const { $, image, image_alt_text, title, subtitle, cta, content, count, id, is_thumbnail, index } = props
 
     useEffect(() => {
         equalHeight('.card-tile-title') // onload
@@ -33,10 +49,10 @@ const CardTile: React.FC<ImageCardItem> = (props: ImageCardItem) => {
 
     return (
         <div
-            id={`card-tile-${id}-${key}`}
-            key={`card-tile-${id}-${key}`}
+            id={`card-tile-${id}-${index}`}
+            key={`card-tile-${id}-${index}`}
             className={`group h-full relative flex flex-col justify-between ${styles.card}`}
-            {...$?.[`cards__${index}`]}
+            {...$?.[`card__${index}` as keyof LivePreviewTypeMapper<ImageCardItem>] }
         >
             <div className='flex flex-col'>
                 <div className='text-xl text-gray-500 dark:text-white text-center'>
@@ -51,7 +67,7 @@ const CardTile: React.FC<ImageCardItem> = (props: ImageCardItem) => {
                 </div>
 
                 {
-                    subtitleExists && <div className='mt-4 text-center'>
+                    subtitle && <div className='mt-4 text-center'>
                         <span
                             data-id='span-text'
                             className='text-2xl font-montserrat text-black font-normal card-subtitle'

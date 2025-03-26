@@ -2,6 +2,7 @@ import _ from 'lodash'
 import { addEditableTags, jsonToHTML } from '@contentstack/utils'
 import { QueryOperator } from '@contentstack/delivery-sdk'
 import { EmbeddedItem } from '@contentstack/utils/dist/types/Models/embedded-object'
+import { Sdk } from '@contentstack/personalize-edge-sdk/dist/sdk'
 import { isEditButtonsEnabled, Stack } from '@/config'
 import { deserializeVariantIds } from '@/utils'
 
@@ -15,7 +16,7 @@ import { deserializeVariantIds } from '@/utils'
   * @param {* containedInQuery} query
   *
   */
-export const getEntries = async <T>(contentTypeUid: string, locale: string , referenceFieldPath: string[], jsonRtePath: string[], query: { queryOperator?: string; filterQuery?: any }, limit:number=0) => {
+export const getEntries = async <T>(contentTypeUid: string, locale: string , referenceFieldPath: string[], jsonRtePath: string[], query: { queryOperator?: string; filterQuery?: any },  personalizationSDK?: Sdk, limit:number=0) => {
     try {    
         let result: { entries: T[] } | null = null
         if(!Stack) {
@@ -28,7 +29,7 @@ export const getEntries = async <T>(contentTypeUid: string, locale: string , ref
             .includeFallback()
             .includeEmbeddedItems()
             .includeReference(referenceFieldPath ?? [])
-            .variants(deserializeVariantIds())
+            .variants(deserializeVariantIds(personalizationSDK))
             .query()
             
 
@@ -54,8 +55,8 @@ export const getEntries = async <T>(contentTypeUid: string, locale: string , ref
             if (limit !== 0) entryQuery.limit(limit)
 
             result = await entryQuery
-                .addParams({include_metadata: 'true'})
-                .addParams({include_applied_variants: true})
+                .addParams({ include_metadata: true })
+                .addParams({ include_applied_variants: true })
                 .find() as { entries: T[] }
 
             const data = result?.entries as EmbeddedItem[]
@@ -94,7 +95,7 @@ export const getEntries = async <T>(contentTypeUid: string, locale: string , ref
  * @param {* Json RTE path} jsonRtePath
  *
  */
-export const getEntryByUrl = async <T> (contentTypeUid: string, locale: string, entryUrl: string, referenceFieldPath: string[], jsonRtePath: string[]) => {
+export const getEntryByUrl = async <T> (contentTypeUid: string, locale: string, entryUrl: string, referenceFieldPath: string[], jsonRtePath: string[], personalizationSDK?: Sdk | undefined) => {
     try {
         let result: { entries: T[] } | null = null
         if (!Stack) {
@@ -108,7 +109,7 @@ export const getEntryByUrl = async <T> (contentTypeUid: string, locale: string, 
             .includeFallback()
             .includeEmbeddedItems()
             .includeReference(referenceFieldPath ?? [])
-            .variants(deserializeVariantIds())
+            .variants(deserializeVariantIds(personalizationSDK))
             
         if (referenceFieldPath){
             for (const path of referenceFieldPath) {
@@ -119,8 +120,8 @@ export const getEntryByUrl = async <T> (contentTypeUid: string, locale: string, 
         if (entryQuery) {
             result = await entryQuery.query()
                 .equalTo('url', entryUrl)
-                .addParams({ 'include_metadata': 'true' })
-                .addParams({ 'include_applied_variants': true })
+                .addParams({ include_metadata: true })
+                .addParams({ include_applied_variants: true })
                 .find() as { entries: T[] }
             
             const data = result?.entries?.[0] as EmbeddedItem

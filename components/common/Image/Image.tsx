@@ -1,6 +1,20 @@
 import { ImageComponent } from '@/types/components'
 import { ImagePlaceholder } from '@/components'
 
+/**
+ * Image component that renders a responsive picture element with multiple source elements for different screen sizes
+ * or a placeholder if no image URL is provided.
+ * 
+ * @param {Object} props - Component props
+ * @param {Object} props.image - Image object containing URL and title
+ * @param {string} props.image_alt_text - Alternative text for the image
+ * @param {string} props.className - CSS class names for styling
+ * @param {boolean} props.is_thumbnail - Flag to determine if image should be rendered as thumbnail
+ * @param {boolean} props.addDataCslp - Flag to add data attributes from image object
+ * @param {Object} props.$ - Optional object containing data-cslp attributes
+ * @returns {JSX.Element} Picture element with responsive sources or placeholder
+ */
+
 const Image: React.FC<ImageComponent> = (props: ImageComponent) => {
     const { image, image_alt_text, className, is_thumbnail, addDataCslp=true, $ } = props
 

@@ -2,12 +2,28 @@ import { Page } from '@/types'
 import { useLocaleContext } from '@/context'
 import packageInfo from '@/package.json'
 
+/**
+ * SEO Component for managing meta tags and document head elements
+ * @component
+ * @param {Object} props - Component properties
+ * @param {Object} props.seo - SEO-specific properties
+ * @param {boolean} props.seo.no_follow - Whether to set nofollow directive
+ * @param {boolean} props.seo.no_index - Whether to set noindex directive
+ * @param {string} props.seo.description - Meta description content
+ * @param {string} props.seo.canonical_url - Canonical URL for the page
+ * @param {string} props.locale - Current locale code
+ * @param {string} props.summary - Alternative description for meta tag
+ * @param {string} props.url - Current page URL
+ * @param {Array} props.locales - Available locale options
+ * @returns {JSX.Element} SEO component with meta tags
+ */
+
 const SEO: React.FC<Page.SeoProps> = (props: Page.SeoProps) => {
 
     const { seo: {no_follow, no_index, description, canonical_url} = {}, locale, summary, url, locales} = props
     const { currentLocale } = useLocaleContext()
 
-    // version attribute is used for internal purpose and we are adding in meta tag to be visible in DOM
+    // Add version in meta tag for internal tracking and DOM visibility
     const { version } = packageInfo
 
     const alternateMetaLinks = locales?.map((lang: { code: string }) => ({
@@ -64,6 +80,7 @@ const SEO: React.FC<Page.SeoProps> = (props: Page.SeoProps) => {
                 rel='alternate'
                 hrefLang={li.hrefLang}
                 href={li.href}
+                key={li.hrefLang}
             />)}
             <link
                 rel='canonical'

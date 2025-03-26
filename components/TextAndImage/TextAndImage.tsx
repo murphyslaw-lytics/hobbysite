@@ -4,6 +4,27 @@ import { Component } from '@/types'
 import { Image, Link } from '@/components'
 import { classNames, resolveCta } from '@/utils'
 
+/**
+ * TextAndImage Component
+ * 
+ * A component that displays text content alongside an image with various layout options.
+ * 
+ * @param {Object} props - Component properties
+ * @param {Object} props.$ - Optional object containing data-cslp attributes
+ * @param {string} props.heading - The main heading text
+ * @param {string} props.content - The main content text
+ * @param {Object} props.image - Image object containing URL and other image properties
+ * @param {string} props.image_alt_text - Alternative text for the image
+ * @param {Array} props.cta - Call-to-action button configuration
+ * @param {Object} props.styles - Styling configuration
+ * @param {('left'|'right'|'top'|'bottom')} props.styles.image_position - Position of the image relative to text
+ * @param {('light'|'dark')} props.styles.theme - Theme variant
+ * @param {Object} props.icon - Optional icon object containing URL and title
+ * @param {string} props.id - Unique identifier for the component
+ * @param {boolean} props.is_thumbnail - Flag to indicate if image should be rendered as thumbnail
+ * @returns {JSX.Element} Rendered TextAndImage component
+ */
+
 export function TextAndImage (props: Component.TextAndImage) {
     const { $, heading, content, image, image_alt_text, cta, styles: { image_position, theme }, icon, id, is_thumbnail } = props
 

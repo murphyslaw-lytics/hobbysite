@@ -42,6 +42,7 @@ const LanguageSelector: FunctionComponent<App.LangaugeSelector> = (props: App.La
 
             return (
                 <MenuItem
+                    key={`language-option-${index}`}
                 >
                     <a
                         className={classNames(
@@ -49,7 +50,6 @@ const LanguageSelector: FunctionComponent<App.LangaugeSelector> = (props: App.La
                             'group flex items-center px-4 py-2 text-sm font-medium gap-3 cursor-pointer'
                         )}
                         onClick={() => handleLanguageSwitch(locale)}
-                        key={`language-option-${index}`}
                     >
                         <span className={`fi fi-${flagCode}`} />
                         <span className=''>

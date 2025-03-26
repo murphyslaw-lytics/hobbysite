@@ -1,6 +1,6 @@
 import Contentstack from '@contentstack/delivery-sdk'
-import ContentstackLivePreview from '@contentstack/live-preview-utils'
-// import { IStackSdk } from '@contentstack/live-preview-utils/dist/src/utils/types' 
+import ContentstackLivePreview, { IStackSdk } from '@contentstack/live-preview-utils'
+import { LivePreviewMode } from '@/types/common'
 
 export const Stack = Contentstack.stack({
     apiKey: process.env.CONTENTSTACK_API_KEY as string,
@@ -22,7 +22,7 @@ const getLocaleForURL = () => {
 
 ContentstackLivePreview.init({
     enable: process.env.isLivePreviewEnabled === 'true' ? true : false,
-    mode: process.env.CONTENTSTACK_VISUAL_BUILDER_MODE as any, // type any is make mode understand that we are passing builder value
+    mode: process.env.CONTENTSTACK_VISUAL_BUILDER_MODE as LivePreviewMode,
     clientUrlParams: { host: process.env.CONTENTSTACK_APP_HOST },
     stackDetails: {
         apiKey: process.env.CONTENTSTACK_API_KEY,
@@ -30,7 +30,7 @@ ContentstackLivePreview.init({
         branch: process.env.CONTENTSTACK_BRANCH,
         locale: getLocaleForURL()
     },
-    stackSdk: Stack.config as any, // once type definition is availble from SDK any need to be replaced with IStackSdk
+    stackSdk: Stack.config as IStackSdk,
     ssr: false
 })
 

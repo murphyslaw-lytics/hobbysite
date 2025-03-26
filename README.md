@@ -8,7 +8,7 @@ About this project: This is a [Next.js](https://nextjs.org/) project bootstrappe
 
 ![compass-starter-app](/public/starter-app.png)
 
-##### Recommended Node version: v18.17.0 and App Supported till v22.6.0
+##### Recommended Node version: v18.17.0 and App Supported till v22.11.0
 
 ## Getting Started
 
@@ -22,6 +22,8 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+##### Note: The url : http://localhost:3000 will have `en` attached to it resulting http://localhost:3000/en, set this url in Contentstack Stack Environment.
+
 You can start editing the page by modifying `app/[locale]/page.tsx`. The page auto-updates as you edit the file.
 
 ## Compass Starter Stack Content Repo
@@ -34,7 +36,7 @@ To import this content to your stack, perform the following steps:
 
 1. Install the CLI by running the following command in your terminal:
 
-	```npm i -g @contentstack/cli@1.28.1``` 
+	```npm i -g @contentstack/cli@1.32.1``` 
 
 2. By default, CLI uses the North America region. To use the Europe region, run this command in your terminal:
 

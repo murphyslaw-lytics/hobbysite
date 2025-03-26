@@ -1,14 +1,29 @@
-import type { AppProps } from 'next/app'
-import { Asset, EmbedEntry, Entry, localeItems, MappedPreview } from './common'
-import { CallToAction, ExternalLink, HeaderSection, InternalLink, SectionLink } from './components'
+import { Asset, EmbedEntry, Entry, LivePreviewTypeMapper, localeItems } from './common'
+import { ExternalLink, InternalLink } from './common'
 
-export interface Header extends Entry {
-  $?: MappedPreview<Header>;
+// ######################### MAIN LAYOUT #########################
+export type MainLayout = {
   logo?: Asset;
-  scrolled?: boolean;
   main_navigation?: Navigation[];
-  items?: items[];
+  footer_navigation?: Footer[];
+  children: React.ReactNode;
+  scrolled?: boolean;
+};
+
+export type WebConfig =  Entry & Header & {
+  footer_navigation: Footer[]; 
+  main_navigation: Navigation[];
+}
+
+// ######################### HEADER & NAVIGATION #########################
+export interface Header extends Entry, Logo {
+  scrolled?: boolean;
+  items: NavItems[];
   locales?: localeItems
+}
+
+export interface Logo {
+  logo?: Asset;
 }
 
 export interface LangaugeSelector {
@@ -16,39 +31,52 @@ export interface LangaugeSelector {
   Opac?: boolean
 }
 
-export interface items {
-  $?: MappedPreview<items>;
-  text?:string
-  link?:InternalLink[]
+export interface Navigation extends Entry {
+  items: NavItems[]
+}
+
+export interface NavItems {
+  $?: LivePreviewTypeMapper<NavItems>;
+  text?: string
+  link?: InternalLink[]
   mega_menu?:{
-    sections?:HeaderSection[];
+    sections?: MegaMenuSection[];
     cta_group?: {
-      call_to_action?:CallToAction[]
+      call_to_action?: CallToAction[]
     }[];
   }[]
 }
-export interface Navigation extends Entry {
-  items: {
-    text?:string
-    link?:InternalLink[]
-    mega_menu?:{
-      sections?:{
-        title?:string
-        link:InternalLink[]
-        links: SectionLink[]
-      }[];
-      cta_group?: {
-        call_to_action?:CallToAction[]
-      }[];
-    }[]
-  }[]
-  // $?: MappedPreview<Header>;
+
+export interface MegaMenuSection{
+  title?:string
+  $? : LivePreviewTypeMapper<MegaMenuSection>
+  link:InternalLink[]
+  links: SectionLink[]
 }
+
+export type CallToAction = {
+  text: string
+  icon?: Asset
+  internal_link?: InternalLink[]
+  external_link?: string
+  $?: LivePreviewTypeMapper<CallToAction>
+}
+
+export interface SectionLink {
+  thumbnail?: Asset;
+  $?: LivePreviewTypeMapper<SectionLink>;
+  text?:string
+  link?:InternalLink[],
+  link_text?:string
+  
+}
+
+// ######################### FOOTER #########################
 export interface Footer extends EmbedEntry {
-  sections?:FooterSection[];
+  sections?: FooterSection[];
   copyright_info?: string;
   built_by?: string;
-  $?: MappedPreview<Footer>;
+  $?: LivePreviewTypeMapper<Footer>;
   logo?: Asset;
 }
 
@@ -57,28 +85,10 @@ export interface FooterSection extends FooterLink {
 }
 
 export interface FooterLink {
-  $?: MappedPreview<FooterLink>
+  $?: LivePreviewTypeMapper<FooterLink>
   title?: string;
   text?: string
   link: InternalLink[]
   external_link?: ExternalLink
-  [key: string]: MappedPreview<FooterLink> | InternalLink[] | ExternalLink | string | undefined;
-}
- 
-export type SingleColLayout = {
-  logo?: Asset;
-  main_navigation?: Navigation[];
-  footer_navigation?: Footer[];
-  children: React.ReactNode;
-  scrolled?: boolean;
-};
-
-export type csWebConfig =   Entry & Header & {
-  footer_navigation: Footer[]; 
-}
-
-export interface Props {
-  appProps:  AppProps
-  locale?: string;
-  web_config?:csWebConfig | null
+  [key: string]: LivePreviewTypeMapper<FooterLink> | InternalLink[] | ExternalLink | string | undefined;
 }

@@ -6,13 +6,23 @@ import parse from 'html-react-parser'
 import { App } from '@/types'
 import { Link } from '@/components'
 import { FooterLink, FooterSection } from '@/types/app'
-import { MappedPreview } from '@/types/common'
+import { LivePreviewTypeMapper } from '@/types/common'
 
 export const isFooterValid = (footer:App.Footer) => {
     return footer && Object.keys(footer)?.length > 0
 }
 
-export const Footer: React.FC<App.Footer> = (props: App.Footer) => {
+/**
+ * React component that renders the footer section of a website.
+ * 
+ * @param {App.Footer} props - Component props
+ * @param {App.FooterSection[]} props.sections - Array of footer sections
+ * @param {string} props.logo - Logo object containing the URL and title of the logo
+ * @param {string} props.built_by - Information about who built the website
+ * @param {string} props.copyright_info - Information about the copyright
+ * @returns {JSX.Element} Footer component
+ */
+export const Footer: React.FC<App.Footer> = (props: App.Footer): JSX.Element => {
     const { sections, copyright_info, built_by, logo, $ } = props
 
     // ? Method to render the Region Links column
@@ -25,8 +35,8 @@ export const Footer: React.FC<App.Footer> = (props: App.Footer) => {
             }
         }
        
-
-        const renderLinks = (links: FooterLink[], links_$: MappedPreview<FooterLink | undefined>) => {
+        
+        const renderLinks = (links: FooterLink[], links_$: LivePreviewTypeMapper<FooterLink | undefined>) => {
             return links?.map((link: FooterLink, index: number) => {
                 return (
                     <li

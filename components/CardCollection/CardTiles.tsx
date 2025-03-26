@@ -1,27 +1,29 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { Fragment} from 'react'
 import { classNames } from '@/utils'
-import { CardCollection, ImageCardItem } from '@/types/components'
-import { MappedPreview } from '@/types/common'
+import { CardCollectionBody, ImageCardItem } from '@/types/components'
 import { CardTile } from '../CardTile'
 
 
-const CardTiles = ({cards, totalCount, id, $}:{ id?: string | number, cards?: ImageCardItem[]|[], totalCount: number , $: MappedPreview<CardCollection | undefined>}) => {
+/**
+ * Renders a collection of cards in a grid layout of card tiles.
+ * 
+ * @param {CardCollectionBody} props - Component props
+ * @param {Array<ImageCardItem>} props.cards - Array of card objects
+ * @param {number} props.count - Total number of cards
+ * @param {string} props.id - Unique identifier for the card collection
+ * @param {Object} props.$ - Optional object containing data-cslp attributes
+ * @returns {JSX.Element} Collection of cards in a grid layout of card tiles
+ */
+const CardTiles = ({cards, count, id, $}: CardCollectionBody): JSX.Element => {
 
-    const [subTitle, setSubTitle] = useState(false)
-
-    useEffect(() => {
-        let exists = false
-        cards?.map((cardData) => {
-            if(cardData?.subtitle) exists = true 
-        })
-        setSubTitle(exists)
-
-    }, [cards])
-
+    /**
+     * Determines the grid column configuration based on number of cards
+     * @returns {string} CSS classes for grid columns
+     */
     const gridConfigurator  = () => {
 
-        if(totalCount > 12) return 'sm:grid-cols-2 lg:grid-cols-3'
+        if(count && count > 12) return 'sm:grid-cols-2 lg:grid-cols-3'
 
         switch(cards?.length) {
         case 1:
@@ -48,19 +50,18 @@ const CardTiles = ({cards, totalCount, id, $}:{ id?: string | number, cards?: Im
                 )
             }
             {...$?.cards}
+            key={`cards-${id}`}
         >
             {cards?.map((cardData: ImageCardItem, idx: number) => {
-                return (<CardTile
-                    id={id}
-                    key={idx}
-                    {...cardData}
-                    count={cards.length}
-                    totalCount={totalCount}
-                    subtitleExists={subTitle}
-                    $ = {cardData.$ && $ ? { ...cardData.$, ...$ } : undefined}
-                    index={idx}
-                />
-                )
+                return (<Fragment key={`card-tile-${id}-${idx}`}>
+                    <CardTile
+                        id={id}
+                        {...cardData}
+                        count={count}
+                        $ = {cardData.$ && $ ? { ...cardData.$, ...$ } : undefined}
+                        index={idx}
+                    />
+                </Fragment>)
             })
             }
         </div> : <></>

@@ -1,112 +1,20 @@
 import { Dispatch, ReactNode, SetStateAction } from 'react'
-import { Asset, MappedPreview } from './common'
+import { Asset, CTA, InternalLink, LivePreviewTypeMapper } from './common'
 import { ArticleListingPage } from './pages'
 
-export type Link = {
-  title?: string;
-  href?: string;
-  $?: MappedPreview<Link>;
-};
-
-export interface InternalLink {
-  $?: MappedPreview<InternalLink>;
-  uid?: string;
-  _content_type_uid?: string;
-  url?: string;
-}
-
-export interface ExternalLink {
-  $?: MappedPreview<ExternalLink>;
-  title?: string
-  href?:string
-}
-
-
-export interface SectionLink {
-  thumbnail?: Asset;
-  $?: MappedPreview<SectionLink>;
-  text?:string
-  link?:InternalLink[],
-  link_text?:string
-}
-
-export interface HeaderSection{
-  title?:string
-  $? : MappedPreview<HeaderSection>
-  link:InternalLink[]
-  links: SectionLink[]
-  [key: string]: MappedPreview<HeaderSection> | InternalLink[] | SectionLink[] | string | undefined;
-}
-
-export interface pageLink {
-  $?: {
-    'data-cslp':string
-  }
-  url?: string | InternalLink[];
-}
-
-export type CallToAction = {
-  text: string
-  icon?: Asset
-  internal_link?: InternalLink[]
-  external_link?: string
-  $?: MappedPreview<CallToAction>
-}
-
 // ######################### COMPONENTS #########################
-export interface LinkComponent extends pageLink {
-  children?: ReactNode;
-  className?: string;
-  target?: string | undefined;
-  'data-title'?:string;
-  isABEnabled?: boolean
-}
 
-export interface CtaCollection {
-  ctas?: Cta[];
-}
-export type Cta = {
-  $?: MappedPreview<Cta>;
-  text?: string;
-  external_url?: string;
-  link?: InternalLink[];
-};
-
-export interface Image {
-  id?: string | number;
-  image?: Asset;
-  cover_image?: Asset
-  image_alt_text?: string;
-  image_position?: string;
-  is_thumbnail?: boolean;
-  $? : MappedPreview<Image>;
-}
-export interface ImageComponent extends Image {
-  className?: string;
-  addDataCslp?: boolean;
-}
-
-export interface Video {
-  id?: string | number;
-  video?: Asset;
-  video_alt_text?: string;
-  $? : MappedPreview<Video>;
-}
-
-export interface VideoComponent extends Video {
-  className?: string;
-  addDataCslp?: boolean;
-}
-
+// Text (HTML RTE) Component
 export interface Text {
   id?: string | number;
   content?: string;
   styles?: {
     background_color?: string;
   }
-  $? : MappedPreview<Text>;
+  $? : LivePreviewTypeMapper<Text>;
 }
 
+// TextAndImage Component Type
 export interface TextAndImage extends Image {
   id?: string;
   heading?: string;
@@ -114,18 +22,19 @@ export interface TextAndImage extends Image {
     image_position?: string;
     theme?:string;
   }
-  cta: Cta[];
+  cta: CTA[];
   content?: string;
   icon?:Image['image'];
-  $?: MappedPreview<TextAndImage>;
+  $?: LivePreviewTypeMapper<TextAndImage>;
 }
 
+// Teaser Component Type
 export interface Teaser {
   id?: string
-  $?: MappedPreview<Teaser>;
+  $?: LivePreviewTypeMapper<Teaser>;
   heading?: string;
   content?: string;
-  cta?: Cta[];
+  cta?: CTA[];
   image?: Image[];
   video?: Video;
   styles?: {
@@ -134,82 +43,70 @@ export interface Teaser {
   isABEnabled?: boolean;
 }
 
-export interface FeaturedArticles {
-  $?: MappedPreview<FeaturedArticles>;
-  id?: string;
-  articles?: ImageCardItem[] | [];
-  heading?: string;
-  sub_heading?: string;
-  [key: string]: MappedPreview<FeaturedArticles> | ImageCardItem[] | [] | string | undefined;
+// CardCollection Component Type <-----
+export interface CardCollection extends CardCollectionBody {
+  header?: CardCollectionHeader;
 }
-
-export interface FeaturedArticlesHeader {
-  $?: MappedPreview<FeaturedArticlesHeader>;
-  id?: string;
-  heading?:string
-  sub_heading?:string
-}
-
-export type ArticleCardItem = ImageCardGraphics &
-  ImageCardText & {
-    id?: string | number;
-    key?: string | number;
-    totalCount?: number;
-    $: MappedPreview<ImageCardGraphics & ImageCardText>;
-};
 
 export interface CardCollectionHeader {
-  $?: MappedPreview<CardCollectionHeader>;
+  $?: LivePreviewTypeMapper<CardCollectionHeader>;
   id?: string;
   heading?:string
   sub_heading?:string
-  
 }
-export interface CardCollection {
-  $?: MappedPreview<CardCollection>;
+
+export interface CardCollectionBody {
   id?: string;
   cards?: ImageCardItem[] | [];
-  header?: CardCollectionHeader;
-  totalCount?: number;
-  [key: string]: MappedPreview<CardCollection> | ImageCardItem[] | CardCollectionHeader | string | number | undefined;
+  count?: number;
+  editKey?: string;
+  $?: LivePreviewTypeMapper<CardCollectionBody>;
 }
+// CardCollection Component Type ENDS ---->
 
-export type ImageCardItem = ImageCardGraphics &
-  ImageCardText & {
-    id?: string | number;
-    key?: string | number;
-    totalCount?: number;
-    $: MappedPreview<ImageCardGraphics & ImageCardText & CardCollection | undefined>;
-    index?: number;
+
+/* The `ImageCardItem` type is used to represent an item, where each item has an image, text content, and associated
+actions (CTA). The `ImageCardItem` type is designed to provide a consistent format for displaying
+image cards within components like `CardCollection`. */
+export interface ImageCardItem extends Image, ImageCardText{
+  id?: string | number;
+  key?: string | number;
+  count?: number;
+  index?: any;
+  $?: LivePreviewTypeMapper<ImageCardItem>
 };
 
-export interface ImageCardGraphics extends Image {
-  count?: number;
-}
 export interface ImageCardText {
   title?: string;
   subtitle?: string;
   content?: string;
-  cta?: Cta;
-  url?: Cta | string;
+  cta?: CTA;
+  url?: string; // when reference is passed as a card
   summary?: string;
-  subtitleExists?: boolean
+  $?: LivePreviewTypeMapper<ImageCardText>
 }
 
-export type CardImage = Asset & {
-  count?: number;
-};
-
+// ArticleCover Component Type
 export type ArticleCover = {
   title?: string
   summary?: string
   cover_image?: Image['image']
-  $?: MappedPreview<ArticleCover>
+  $?: LivePreviewTypeMapper<ArticleCover>
 }
 
-export type RelatedLinks = {
+// FeaturedArticles Component Type
+export interface FeaturedArticles {
+  $?: LivePreviewTypeMapper<FeaturedArticles>;
+  id?: string;
+  articles?: ImageCardItem[] | [];
+  heading?: string;
+  sub_heading?: string;
+}
+
+// RelatedLink Component Type <----
+export type RelatedLinksComponent = {
   relatedLinks?: ArticleListingPage['entry'][] |[]
-  relatedLinksLabel?: related_links
+  relatedLinksLabel?: RelatedLinks
   $?: {
     taxonomies?: {'data-cslp': string}
     related_links?: { 'data-cslp': string }
@@ -217,25 +114,71 @@ export type RelatedLinks = {
   }
 }
 
-export type RelatedArticles = {
-  related_articles?: related_articles
+export interface RelatedLinks {
+  text?: string
+  $?: LivePreviewTypeMapper<RelatedLinks>
+}
+// ---->
+
+
+// RelatedArticles Component Type <----
+export type RelatedArticlesComponent = {
+  related_articles?: RelatedArticles
   cards?:  ImageCardItem[] | []
 }
 
-export interface related_articles {
+export interface RelatedArticles {
   heading?:string
   sub_heading?:string
   number_of_articles?:number
   related_article_tags?:string[]
-  $?: MappedPreview<related_articles>
+  $?: LivePreviewTypeMapper<RelatedArticles>
+}
+// ---->
+
+export interface LinkComponent {
+  children?: ReactNode;
+  className?: string;
+  target?: string | undefined;
+  'data-title'?: string;
+  url?: string | InternalLink[];
+  $?: {
+    'data-cslp':string
+  }
+  isABEnabled?: boolean
 }
 
-export interface related_links {
-  text?: string
-  $?: MappedPreview<related_links>
+// Image Component
+export interface ImageComponent extends Image {
+  className?: string;
+  addDataCslp?: boolean;
 }
 
-export interface pagination {
+export interface Image {
+  id?: string | number;
+  image?: Asset;
+  cover_image?: Asset
+  image_alt_text?: string;
+  image_position?: string;
+  is_thumbnail?: boolean;
+  $? : LivePreviewTypeMapper<Image>;
+}
+
+// Video Component <----
+export interface VideoComponent extends Video {
+  className?: string;
+  addDataCslp?: boolean;
+}
+
+export interface Video {
+  id?: string | number;
+  video?: Asset;
+  video_alt_text?: string;
+  $? : LivePreviewTypeMapper<Video>;
+}
+// ---->
+
+export interface Pagination {
   length: number
   dataPerPage: number
   currentPage: number
@@ -246,20 +189,3 @@ export interface Carousel {
   className?: string,
   children? :string|ReactNode
 }
-
-// ######################### COMPONENTS END #########################
-
-
-// ######################### StatusIndicator  #########################
-// export interface ComponentValidator {
-//   status?: ValidityStatus;
-//   validators: boolean[];
-//   validationInfo: string[];
-//   children?: ReactNode;
-// }
-// ######################### StatusIndicator END #########################
-
-// export interface HeroLanguageSelector {
-//   markets: Market[];
-//   backgroundImage?: Asset;
-// }

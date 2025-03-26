@@ -1,1 +1,0 @@
-export {SingleCol} from './SingleCol'
