@@ -393,6 +393,6 @@ function Header (props: App.Header): JSX.Element {
             </Dialog>
         </header>
     )
-}
+}}
 
 export { Header }
