@@ -144,7 +144,7 @@ function Header (props: App.Header): JSX.Element {
         strategy="beforeInteractive" // Ensures the script loads in the <head> before React runs
         onLoad={() => {
         console.log('Library loaded!');}}
-/>
+        /Script>
         <header id='header-component' className={`${isHome ? 'mt-[-80px]' : ''} bg-white sticky top-0 z-50 hover:bg-white ${(!Opac) ? 'bg-opacity-100' : 'bg-opacity-20'}`}>
             <nav className={`mx-auto flex items-center justify-between px-4 py-5 lg:px-8 ${mobileMenuOpen ? 'hidden sm:block' : ''}`} aria-label='Global'>
                 <div className='flex lg:flex-1`'>
