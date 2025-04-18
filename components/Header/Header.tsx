@@ -1,7 +1,7 @@
 'use client'
 /* eslint-disable @next/next/no-img-element */
 import { Fragment, useEffect, useState } from 'react'
-import Script from 'next/script' // <<== Import Script
+// import Script from 'next/script' // <<== Import Script
 import { Dialog, DialogPanel, Disclosure, Popover, PopoverBackdrop, PopoverButton, PopoverGroup, PopoverPanel, Transition } from '@headlessui/react'
 import {
     Bars3Icon,
@@ -126,15 +126,15 @@ function Header (props: App.Header): JSX.Element {
     }
 
     return (
-          <>
-      {/* Load External Script */}
-      <Script
-        src="https://c.lytics.io/api/tag/ace594a431d70e90c5882862b94da308/latest.min.js" // <<== Your external JS file here
-        strategy="afterInteractive" // Load after page becomes interactive
-        onLoad={() => {
-          console.log('External library loaded!');
-        }}
-      />
+      //     <>
+      // {/* Load External Script */}
+      // <Script
+      //   src="https://c.lytics.io/api/tag/ace594a431d70e90c5882862b94da308/latest.min.js" // <<== Your external JS file here
+      //   strategy="afterInteractive" // Load after page becomes interactive
+      //   onLoad={() => {
+      //     console.log('External library loaded!');
+      //   }}
+      // />
         <header id='header-component' className={`${isHome ? 'mt-[-80px]' : ''} bg-white sticky top-0 z-50 hover:bg-white ${(!Opac) ? 'bg-opacity-100' : 'bg-opacity-20'}`}>
             <nav className={`mx-auto flex items-center justify-between px-4 py-5 lg:px-8 ${mobileMenuOpen ? 'hidden sm:block' : ''}`} aria-label='Global'>
                 <div className='flex lg:flex-1`'>
@@ -393,6 +393,6 @@ function Header (props: App.Header): JSX.Element {
             </Dialog>
         </header>
     )
-}}
+}
 
 export { Header }
