@@ -84,7 +84,7 @@ export const useJstag = (): any => {
 
             window.jstag = window.jstag || {}
             window.jstag?.init?.({
-                src: `https://c.lytics.io/api/tag/${process.env.NEXT_PUBLIC_LYTICS_TAG}/latest.min.js`,
+                src: `https://c.lytics.io/api/tag/${process.env.LYTICS_TAG}/latest.min.js`,
                 contentstack: {
                     entityPush: {
                         poll: {
