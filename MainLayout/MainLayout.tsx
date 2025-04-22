@@ -8,6 +8,7 @@ import { onEntryChange } from '@/config'
 import useRouterHook from '@/hooks/useRouterHook'
 import { LocaleContext, usePersonalization } from '@/context'
 import { footerJsonRtePathIncludes, footerReferenceIncludes, getEntries, navigationReferenceIncludes } from '@/services'
+import { LyticsTracking } from '@/components/LyticsTracking'
 
 const MainLayout: React.FC<App.MainLayout> = (
     props: React.PropsWithChildren<App.MainLayout>
@@ -62,6 +63,7 @@ const MainLayout: React.FC<App.MainLayout> = (
                         logo={webConfig.logo}
                     />
                 }
+                <LyticsTracking></LyticsTracking>
                 <div className='main-layout mx-auto h-screen min-h-screen justify-center relative'>
                     {props.children}
                 </div>
