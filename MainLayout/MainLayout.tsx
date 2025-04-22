@@ -8,7 +8,7 @@ import { onEntryChange } from '@/config'
 import useRouterHook from '@/hooks/useRouterHook'
 import { LocaleContext, usePersonalization } from '@/context'
 import { footerJsonRtePathIncludes, footerReferenceIncludes, getEntries, navigationReferenceIncludes } from '@/services'
-import { LyticsTracking } from '@/components/LyticsTracking'
+import { LyticsTracking } from '@/components/lyticsTracking'
 
 const MainLayout: React.FC<App.MainLayout> = (
     props: React.PropsWithChildren<App.MainLayout>

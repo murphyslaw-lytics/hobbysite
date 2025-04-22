@@ -18,7 +18,7 @@ import { LivePreviewTypeMapper, Locale  } from '@/types/common'
 import { usePersonalization } from '@/context'
 import { MegaMenuSection } from '@/types/app'
 import { LanguageSelector } from '../LanguageSelector'
-import { useEntity } from '@/components/LyticsTracking'
+
 
 /**
  * React component that renders the header section of a website.
@@ -40,7 +40,7 @@ function Header (props: App.Header): JSX.Element {
     const [, setOpen] = useState(false)
     const [locales, setLocales] = useState<Locale[] | []>([])
     const { path } = useRouterHook()
-    const lyticsProfileData = useEntity();
+    
 
     // Determine if the current page is the home page (or AB Test Landing Page) or not
     // Further used to set transparency of the header if the page is the home page or AB Test Landing Page
