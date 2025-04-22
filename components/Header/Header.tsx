@@ -1,6 +1,5 @@
 'use client'
 /* eslint-disable @next/next/no-img-element */
-import Script from 'next/script' // <<== Import Script
 import { Fragment, useEffect, useState } from 'react'
 import { Dialog, DialogPanel, Disclosure, Popover, PopoverBackdrop, PopoverButton, PopoverGroup, PopoverPanel, Transition } from '@headlessui/react'
 import {
